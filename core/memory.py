@@ -1,40 +1,13 @@
-import json
-import os
-
-MEMORY_FILE = os.path.join(
-    os.path.dirname(os.path.dirname(__file__)),
-    "data",
-    "memory.json"
-)
-
-def _load():
-    with open(MEMORY_FILE, "r") as f:
-        return json.load(f)
-
-def _save(data):
-    with open(MEMORY_FILE, "w") as f:
-        json.dump(data, f, indent=2)
-
-# Name memory
-def set_name(name: str):
-    data = _load()
-    data["name"] = name
-    data["pending_intent"] = None
-    _save(data)
+from core.memory_persistent import get, set
 
 def get_name():
-    return _load().get("name")
+    return get("user.name")
 
-# Context handling
-def set_pending(intent: str):
-    data = _load()
-    data["pending_intent"] = intent
-    _save(data)
+def set_name(name):
+    set("user.name", name)
 
-def get_pending():
-    return _load().get("pending_intent")
+def get_pref(k, d=None):
+    return get(f"preferences.{k}", d)
 
-def clear_pending():
-    data = _load()
-    data["pending_intent"] = None
-    _save(data)
+def set_pref(k, v):
+    set(f"preferences.{k}", v)

@@ -1,19 +1,14 @@
-# core/security.py
-
-SESSION_AUTHORIZED = False
-PIN_CODE = "1234"
+PIN = "1234"
+AUTHORIZED = False
 
 def require_permission():
-    global SESSION_AUTHORIZED
-
-    if SESSION_AUTHORIZED:
+    global AUTHORIZED
+    if AUTHORIZED:
         return True
-
-    entered = input("🔐 Enter PIN to confirm: ").strip()
-    if entered == PIN_CODE:
-        SESSION_AUTHORIZED = True
+    p = input("🔐 Enter PIN: ").strip()
+    if p == PIN:
+        AUTHORIZED = True
         print("Omni: Permission granted.")
         return True
-    else:
-        print("Omni: Permission denied.")
-        return False
+    print("Omni: Permission denied.")
+    return False
