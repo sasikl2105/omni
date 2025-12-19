@@ -1,40 +1,39 @@
 from core.brain import parse_command
 from core.executor import write_file, read_file, delete_file
 from core.memory import set_name, get_name
+from core.context import set_context, get_context
 from core.voice import listen
 from core.speaker import speak
-from core.context import set_context, get_context
 
-print("Omni v0.12.2 online.")
+print("Omni v0.12.4 online.")
 
 def say(text: str):
     print("Omni:", text)
     speak(text)
 
-# ---------- INPUT MODE SETUP ----------
+# -------- INPUT MODE SETUP (ONCE) --------
 input_mode = None
-
-while input_mode not in ["voice", "text"]:
-    choice = input("Choose input mode (voice/text): ").strip().lower()
-    if choice in ["voice", "text"]:
+while input_mode not in ["text", "voice"]:
+    choice = input("Choose input mode (text/voice): ").strip().lower()
+    if choice in ["text", "voice"]:
         input_mode = choice
     else:
-        print("Please type 'voice' or 'text'.")
+        print("Please type 'text' or 'voice'.")
 
 say(f"{input_mode.capitalize()} mode activated.")
-print("Say 'switch to voice mode' or 'switch to text mode' anytime.")
-print("Say 'exit' or 'bye' to quit.")
+print("You can say or type 'switch to voice mode' or 'switch to text mode'.")
+print("Say 'bye' or 'exit' to quit.")
 
-# ---------- MAIN LOOP ----------
+# -------- MAIN LOOP --------
 while True:
     context = get_context()
 
-    # INPUT
+    # INPUT (TEXT-FIRST DESIGN)
     if input_mode == "voice":
         spoken = listen()
         if spoken:
             print(f"You (voice): {spoken}")
-            user_input = spoken.strip()
+            user_input = spoken
         else:
             user_input = input("You: ").strip()
     else:
@@ -50,13 +49,13 @@ while True:
         say("Goodbye.")
         break
 
-    # MODE SWITCH
-    if any(x in lower_input for x in ["switch to voice", "voice mode", "voice on"]):
+    # MODE SWITCH (EXPLICIT ONLY)
+    if "switch to voice" in lower_input:
         input_mode = "voice"
         say("Voice mode activated.")
         continue
 
-    if any(x in lower_input for x in ["switch to text", "text mode", "voice off", "text only"]):
+    if "switch to text" in lower_input or "voice off" in lower_input:
         input_mode = "text"
         say("Text mode activated.")
         continue
@@ -92,17 +91,13 @@ while True:
         else:
             say("I don't know your name yet.")
 
-    # EXPLAIN MEMORY
-    elif intent == "explain_name":
-        say("You told me your name earlier, so I remembered it.")
-        set_context(intent="explain_name")
+    # FAREWELL (NON-EXIT)
+    elif intent == "farewell":
+        say("See you later 👋")
 
-    # FILE ACTIONS
+    # FILE OPS
     elif intent == "write_file":
-        ok, msg = write_file(
-            intent_data.get("path", ""),
-            intent_data.get("content", "")
-        )
+        ok, msg = write_file(intent_data.get("path", ""), intent_data.get("content", ""))
         say(msg)
 
     elif intent == "read_file":
@@ -112,10 +107,6 @@ while True:
     elif intent == "delete_file":
         ok, msg = delete_file(intent_data.get("path", ""))
         say(msg)
-
-# FAREWELL
-    elif intent == "farewell":
-        say("See you later 👋")
 
     # UNKNOWN
     else:
