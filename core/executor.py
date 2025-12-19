@@ -1,9 +1,13 @@
 import os
 from core.sandbox import ensure_sandbox, is_inside_sandbox
+from core.permission_gate import request_permission
 
 ensure_sandbox()
 
 def write_file(path: str, content: str):
+    if not request_permission("write_file"):
+        return False, "Permission denied"
+
     if not is_inside_sandbox(path):
         return False, "Blocked: outside sandbox"
 
@@ -14,6 +18,9 @@ def write_file(path: str, content: str):
     return True, "File written successfully"
 
 def read_file(path: str):
+    if not request_permission("read_file"):
+        return False, "Permission denied"
+
     if not is_inside_sandbox(path):
         return False, "Blocked: outside sandbox"
 
@@ -24,6 +31,9 @@ def read_file(path: str):
         return True, f.read()
 
 def delete_file(path: str):
+    if not request_permission("delete_file"):
+        return False, "Permission denied"
+
     if not is_inside_sandbox(path):
         return False, "Blocked: outside sandbox"
 
