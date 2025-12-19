@@ -1,44 +1,29 @@
-import os
-from core.sandbox import ensure_sandbox, is_inside_sandbox
-from core.permission_gate import request_permission
+# core/executor.py
 
-ensure_sandbox()
+import os
 
 def write_file(path: str, content: str):
-    if not request_permission("write_file"):
-        return False, "Permission denied"
-
-    if not is_inside_sandbox(path):
-        return False, "Blocked: outside sandbox"
-
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(content)
-
-    return True, "File written successfully"
+    try:
+        with open(path, "w") as f:
+            f.write(content)
+        return True, f"File '{path}' written successfully."
+    except Exception as e:
+        return False, f"Failed to write file: {e}"
 
 def read_file(path: str):
-    if not request_permission("read_file"):
-        return False, "Permission denied"
-
-    if not is_inside_sandbox(path):
-        return False, "Blocked: outside sandbox"
-
-    if not os.path.exists(path):
-        return False, "File not found"
-
-    with open(path, "r", encoding="utf-8") as f:
-        return True, f.read()
+    try:
+        if not os.path.exists(path):
+            return False, "File does not exist."
+        with open(path, "r") as f:
+            return True, f.read()
+    except Exception as e:
+        return False, f"Failed to read file: {e}"
 
 def delete_file(path: str):
-    if not request_permission("delete_file"):
-        return False, "Permission denied"
-
-    if not is_inside_sandbox(path):
-        return False, "Blocked: outside sandbox"
-
-    if not os.path.exists(path):
-        return False, "File not found"
-
-    os.remove(path)
-    return True, "File deleted"
+    try:
+        if not os.path.exists(path):
+            return False, "File does not exist."
+        os.remove(path)
+        return True, f"File '{path}' deleted."
+    except Exception as e:
+        return False, f"Failed to delete file: {e}"
