@@ -6,6 +6,7 @@ COMMON_FIXES = {
     "mt": "my",
     "y": "my",
     "nmae": "name",
+    "latee": "later"
 }
 
 def normalize(text: str) -> str:
@@ -32,11 +33,17 @@ def parse_command(raw_command: str) -> dict:
     if fuzzy_contains(command, ["exit", "quit", "bye"]) >= 1:
         return {"intent": "exit"}
 
-    # GREET (tolerant)
+    # FAREWELL (NON-EXIT)
+    if fuzzy_contains(command, ["see", "later"]) >= 2 or \
+       fuzzy_contains(command, ["talk", "later"]) >= 2 or \
+       fuzzy_contains(command, ["see", "ya"]) >= 1:
+        return {"intent": "farewell"}
+
+    # GREET
     if fuzzy_contains(command, ["hi", "hello", "hey"]) >= 1:
         return {"intent": "greet"}
 
-    # QUESTION INTENTS FIRST
+    # QUESTION INTENTS
     if command.startswith("what") or command.startswith("who") or command.startswith("how"):
         if "name" in command:
             return {"intent": "get_name"}
@@ -53,5 +60,4 @@ def parse_command(raw_command: str) -> dict:
             }
         return {"intent": "ask_name"}
 
-    # UNKNOWN
     return {"intent": "unknown"}
