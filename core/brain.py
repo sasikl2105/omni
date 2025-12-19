@@ -1,25 +1,42 @@
-def parse(text):
-    t = text.lower()
+def parse(text: str):
+    t = text.lower().strip()
 
+    # greetings
+    if t in ["hi", "hello", "hey", "hai"]:
+        return {"intent": "greet"}
+
+    # explain memory / awareness
+    if "how did you know my name" in t or "how do you know my name" in t:
+        return {"intent": "explain_name"}
+
+    # set name
     if t.startswith("my name is"):
-        return {"intent": "set_name", "name": t.split()[-1].capitalize()}
+        parts = t.split()
+        if len(parts) >= 4:
+            return {"intent": "set_name", "name": parts[-1].capitalize()}
 
+    # get name
     if "what is my name" in t:
         return {"intent": "get_name"}
 
-    if "scan port" in t:
+    # ethical hacking
+    if t.startswith("scan port"):
         return {"intent": "studentbae"}
 
+    # glitchwood
     if "create player" in t:
         return {"intent": "glitchwood"}
 
-    if "enable wifi" in t:
-        return {"intent": "root", "cmd": "wifi_on"}
+    # system info
+    if "battery" in t:
+        return {"intent": "battery"}
 
-    if "disable wifi" in t:
-        return {"intent": "root", "cmd": "wifi_off"}
+    # root commands (future)
+    if t.startswith("root"):
+        return {"intent": "root", "cmd": t}
 
-    if t in ["bye", "exit"]:
+    # exit
+    if t in ["bye", "exit", "quit"]:
         return {"intent": "exit"}
 
     return {"intent": "unknown"}

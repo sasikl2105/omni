@@ -14,36 +14,56 @@ while True:
         continue
 
     data = parse(text)
-    intent = data["intent"]
+    intent = data.get("intent")
 
+    # exit
     if intent == "exit":
         print("Omni: Goodbye.")
         break
 
-    if intent == "set_name":
+    # greeting
+    elif intent == "greet":
+        name = get_name()
+        if name:
+            print(f"Omni: Hello {name}")
+        else:
+            print("Omni: Hello 👋")
+
+    # explain memory
+    elif intent == "explain_name":
+        name = get_name()
+        if name:
+            print("Omni: You told me your name earlier, so I remembered it.")
+        else:
+            print("Omni: You haven't told me your name yet.")
+
+    # set name
+    elif intent == "set_name":
         set_name(data["name"])
         print(f"Omni: Nice to meet you, {data['name']}.")
-        continue
 
-    if intent == "get_name":
+    # get name
+    elif intent == "get_name":
         print("Omni:", get_name() or "I don't know yet.")
-        continue
 
-    if intent == "studentbae":
+    # ethical hacking assistant
+    elif intent == "studentbae":
         print("\nOmni:", studentbae(text), "\n")
-        continue
 
-    if intent == "glitchwood":
+    # glitchwood assistant
+    elif intent == "glitchwood":
         if require_permission():
             print("Omni:", create_player())
-        continue
 
-    if intent == "root":
-        print("Omni:", run_root(data["cmd"]))
-        continue
+    # root command (safe / simulated)
+    elif intent == "root":
+        if require_permission():
+            print("Omni:", run_root(data.get("cmd")))
 
-    if "battery" in text:
+    # battery info
+    elif intent == "battery":
         print("Omni:", battery_status())
-        continue
 
-    print("Omni: I am still learning.")
+    # fallback
+    else:
+        print("Omni: I am still learning.")
