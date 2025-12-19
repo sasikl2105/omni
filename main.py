@@ -1,7 +1,8 @@
 from core.brain import parse_command
 from core.executor import write_file, read_file, delete_file
+from core.memory import set_name, get_name
 
-print("Omni v0.10.1 online. Type 'bye' or 'exit' to quit.")
+print("Omni v0.10.2 online. Say hi 👋")
 
 while True:
     user_input = input("You: ").strip()
@@ -12,6 +13,24 @@ while True:
     if intent == "exit":
         print("Omni: Goodbye. Shutting down.")
         break
+
+    elif intent == "greet":
+        name = get_name()
+        if name:
+            print(f"Omni: Hello {name} 👋")
+        else:
+            print("Omni: Hello 👋")
+
+    elif intent == "set_name":
+        set_name(intent_data["name"])
+        print(f"Omni: Nice to meet you, {intent_data['name']}.")
+
+    elif intent == "get_name":
+        name = get_name()
+        if name:
+            print(f"Omni: Your name is {name}.")
+        else:
+            print("Omni: I don't know your name yet.")
 
     elif intent == "write_file":
         ok, msg = write_file(
@@ -29,4 +48,4 @@ while True:
         print("Omni:", msg)
 
     else:
-        print("Omni: I did not understand that yet.")
+        print("Omni: I am still learning.")
