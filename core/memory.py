@@ -15,10 +15,26 @@ def _save(data):
     with open(MEMORY_FILE, "w") as f:
         json.dump(data, f, indent=2)
 
+# Name memory
 def set_name(name: str):
     data = _load()
     data["name"] = name
+    data["pending_intent"] = None
     _save(data)
 
 def get_name():
     return _load().get("name")
+
+# Context handling
+def set_pending(intent: str):
+    data = _load()
+    data["pending_intent"] = intent
+    _save(data)
+
+def get_pending():
+    return _load().get("pending_intent")
+
+def clear_pending():
+    data = _load()
+    data["pending_intent"] = None
+    _save(data)
