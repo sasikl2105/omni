@@ -1,13 +1,42 @@
-from core.memory_persistent import get, set
+# core/memory.py
+# Safe persistent memory handler
+
+import json
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+MEMORY_FILE = os.path.join(BASE_DIR, "data", "memory.json")
+
+DEFAULT_MEMORY = {
+    "user": {}
+}
+
+def _load():
+    if not os.path.exists(MEMORY_FILE):
+        _save(DEFAULT_MEMORY)
+        return DEFAULT_MEMORY.copy()
+
+    try:
+        with open(MEMORY_FILE, "r") as f:
+            data = json.load(f)
+            if not isinstance(data, dict):
+                raise ValueError
+            return data
+    except Exception:
+        # Auto-heal corrupted memory
+        _save(DEFAULT_MEMORY)
+        return DEFAULT_MEMORY.copy()
+
+def _save(mem):
+    with open(MEMORY_FILE, "w") as f:
+        json.dump(mem, f, indent=2)
+
+def set_name(name: str):
+    mem = _load()
+    mem.setdefault("user", {})
+    mem["user"]["name"] = name
+    _save(mem)
 
 def get_name():
-    return get("user.name")
-
-def set_name(name):
-    set("user.name", name)
-
-def get_pref(k, d=None):
-    return get(f"preferences.{k}", d)
-
-def set_pref(k, v):
-    set(f"preferences.{k}", v)
+    mem = _load()
+    return mem.get("user", {}).get("name")

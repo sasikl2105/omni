@@ -1,12 +1,11 @@
+# main.py
 from core.brain import parse
-from core.memory import get_name, set_name
-from core.security import require_permission
-from core.system_access import battery_status
-from core.root_access import run_root
-from plugins.studentbae import handle as studentbae
-from plugins.glitchwood import create_player
+from core.memory import set_name, get_name
+from core.advanced_brain import explain_tool
+from core.security import request_permission
+from core.executor import run_nmap_scan, run_nmap_port
 
-print("Omni online. Type 'exit' to quit.")
+print("Omni online (Phase-2). Type 'exit' to quit.")
 
 while True:
     text = input("You: ").strip()
@@ -14,56 +13,38 @@ while True:
         continue
 
     data = parse(text)
-    intent = data.get("intent")
+    intent = data["intent"]
 
-    # exit
     if intent == "exit":
         print("Omni: Goodbye.")
         break
 
-    # greeting
-    elif intent == "greet":
+    if intent == "greet":
         name = get_name()
-        if name:
-            print(f"Omni: Hello {name}")
-        else:
-            print("Omni: Hello 👋")
+        print(f"Omni: Hello {name}" if name else "Omni: Hello 👋")
+        continue
 
-    # explain memory
-    elif intent == "explain_name":
-        name = get_name()
-        if name:
-            print("Omni: You told me your name earlier, so I remembered it.")
-        else:
-            print("Omni: You haven't told me your name yet.")
-
-    # set name
-    elif intent == "set_name":
+    if intent == "set_name":
         set_name(data["name"])
         print(f"Omni: Nice to meet you, {data['name']}.")
+        continue
 
-    # get name
-    elif intent == "get_name":
-        print("Omni:", get_name() or "I don't know yet.")
+    if intent == "get_name":
+        print("Omni:", get_name() or "I don't know your name yet.")
+        continue
 
-    # ethical hacking assistant
-    elif intent == "studentbae":
-        print("\nOmni:", studentbae(text), "\n")
+    if intent == "explain_tool":
+        print("Omni:\n" + explain_tool(data["tool"]))
+        continue
 
-    # glitchwood assistant
-    elif intent == "glitchwood":
-        if require_permission():
-            print("Omni:", create_player())
+    if intent == "scan_network":
+        if request_permission("nmap network scan"):
+            print("Omni:\n" + run_nmap_scan(data["target"]))
+        continue
 
-    # root command (safe / simulated)
-    elif intent == "root":
-        if require_permission():
-            print("Omni:", run_root(data.get("cmd")))
+    if intent == "scan_port":
+        if request_permission(f"nmap port scan {data['port']}"):
+            print("Omni:\n" + run_nmap_port(data["target"], data["port"]))
+        continue
 
-    # battery info
-    elif intent == "battery":
-        print("Omni:", battery_status())
-
-    # fallback
-    else:
-        print("Omni: I am still learning.")
+    print("Omni: I am still learning.")
