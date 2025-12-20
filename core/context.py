@@ -1,19 +1,23 @@
 # core/context.py
+# Short-term conversational context (RAM only)
 
-_CONTEXT = {
-    "last_intent": None,
-    "last_entity": None
+_context = {
+    "intent": None,
+    "explanation": None,
+    "mode": "normal"   # normal | hacker | teacher | builder
 }
 
-def set_context(intent=None, entity=None):
+def set_context(intent=None, explanation=None):
     if intent:
-        _CONTEXT["last_intent"] = intent
-    if entity:
-        _CONTEXT["last_entity"] = entity
+        _context["intent"] = intent
+    if explanation:
+        _context["explanation"] = explanation
 
-def get_context():
-    return _CONTEXT.copy()
+def get_last_explanation():
+    return _context["explanation"]
 
-def clear_context():
-    _CONTEXT["last_intent"] = None
-    _CONTEXT["last_entity"] = None
+def get_mode():
+    return _context["mode"]
+
+def set_mode(mode: str):
+    _context["mode"] = mode

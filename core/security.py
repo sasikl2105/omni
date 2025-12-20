@@ -1,14 +1,7 @@
-PIN = "1234"
-AUTHORIZED = False
+# core/security.py
+# Phase-4 permission gate
 
-def require_permission():
-    global AUTHORIZED
-    if AUTHORIZED:
-        return True
-    p = input("🔐 Enter PIN: ").strip()
-    if p == PIN:
-        AUTHORIZED = True
-        print("Omni: Permission granted.")
-        return True
-    print("Omni: Permission denied.")
-    return False
+def ask_permission(action: str) -> bool:
+    print(f"Omni (security): Permission required to {action}.")
+    ans = input("Allow? (yes/no): ").strip().lower()
+    return ans in ["yes", "y"]

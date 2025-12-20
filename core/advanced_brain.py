@@ -1,35 +1,34 @@
 # core/advanced_brain.py
-# Studentbae++ / GamkersGPT intelligence layer
-# EXPLANATION ONLY — NO EXECUTION
+# Mode-aware reasoning (Studentbae++)
 
-def explain_tool(tool: str) -> str:
-    tool = tool.lower()
+from core.context import get_mode
 
-    if tool == "nmap":
-        return (
-            "Nmap is a network scanning tool used in ethical hacking.\n"
-            "It helps identify live hosts, open ports, and running services.\n\n"
-            "Example (educational):\n"
-            "nmap -sn 192.168.1.0/24\n\n"
-            "⚠ Use only on networks you own or have permission to test."
-        )
+def explain_intent(intent: str, raw: str):
+    mode = get_mode()
 
-    if tool == "sqlmap":
-        return (
-            "SQLMap is an automated tool used to test SQL injection vulnerabilities.\n"
-            "It detects and exploits insecure database queries.\n\n"
-            "Example (educational):\n"
-            "sqlmap -u \"http://example.com/page?id=1\" --batch\n\n"
-            "⚠ Only use on legal labs or permitted targets."
-        )
+    if intent == "set_name":
+        return "You are telling me your name so I can remember you."
 
-    if tool == "hydra":
-        return (
-            "Hydra is a login brute-force tool for protocols like SSH, FTP, HTTP.\n"
-            "It is used to test password strength.\n\n"
-            "Example (educational):\n"
-            "hydra -l admin -P passwords.txt ssh://127.0.0.1\n\n"
-            "⚠ Brute-force attacks without permission are illegal."
-        )
+    if intent == "get_name":
+        return "You are checking whether I remember your identity."
 
-    return "I don't have information about that tool yet."
+    if intent == "scan":
+        if mode == "hacker":
+            return "You want to perform an ethical network scan for security analysis."
+        return "You want to scan a network. This must be done ethically."
+
+    if intent == "mode":
+        return f"Switching operational mode."
+
+    if intent == "exit":
+        return "You want to end the conversation."
+
+    if mode == "teacher":
+        return "I am analyzing your question in an educational way."
+
+    return "I am trying to understand your request."
+
+def ethical_check(intent: str):
+    if intent == "scan":
+        return True, "Only scan systems you own or have permission for."
+    return True, ""

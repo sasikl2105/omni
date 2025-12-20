@@ -1,17 +1,21 @@
-import os
+# core/executor.py
+# Phase-4 safe command execution
 
-def write_file(path, content):
-    try:
-        with open(path, "w") as f:
-            f.write(content)
-        return True, "File written."
-    except Exception as e:
-        return False, str(e)
+import subprocess
 
-def read_file(path):
+ALLOWED_COMMANDS = {
+    "nmap": ["-sn"]
+}
+
+def run_nmap_scan(target: str):
     try:
-        if not os.path.exists(path):
-            return False, "File not found."
-        return True, open(path).read()
+        cmd = ["nmap", "-sn", target]
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=30
+        )
+        return result.stdout if result.stdout else result.stderr
     except Exception as e:
-        return False, str(e)
+        return f"Execution error: {e}"
