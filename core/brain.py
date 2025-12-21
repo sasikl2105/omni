@@ -1,27 +1,19 @@
 def parse(text: str) -> dict:
-    t = text.lower().strip()
+    text = text.lower().strip()
 
-    if t in ["exit", "bye", "quit"]:
-        return {"intent": "exit"}
+    if "system info" in text:
+        return {"command": "system_info"}
 
-    if t.startswith("my name is"):
-        name = t.replace("my name is", "").strip().capitalize()
-        return {"intent": "set_name", "name": name}
+    if text.startswith("list files"):
+        return {"command": "list_files"}
 
-    if "what is my name" in t:
-        return {"intent": "get_name"}
+    if text.startswith("read"):
+        parts = text.split()
+        if len(parts) >= 2:
+            return {"command": "read_file", "file": parts[1]}
 
-    if "hacker mode" in t:
-        return {"intent": "mode", "mode": "hacker"}
+    if text.startswith("run"):
+        shell_cmd = text.replace("run", "", 1).strip()
+        return {"command": "shell", "shell_cmd": shell_cmd}
 
-    if "teacher mode" in t:
-        return {"intent": "mode", "mode": "teacher"}
-
-    if "builder mode" in t:
-        return {"intent": "mode", "mode": "builder"}
-
-    # hacking-related questions
-    if any(k in t for k in ["wifi", "password", "scan", "nmap", "hydra"]):
-        return {"intent": "explain_hacking"}
-
-    return {"intent": "unknown"}
+    return {"command": "unknown"}

@@ -1,40 +1,34 @@
 from core.brain import parse
-from core.memory import get_name, set_name
-from personas.gamkersgpt import explain
+from core.executor import execute
 
-mode = "normal"
+def main():
+    print("🧠 Omni online (Executor Mode)")
+    print("Type commands or 'exit'")
+    print("-" * 40)
 
-print("Omni online (GamkersGPT-Brain). Type 'exit' to quit.")
+    while True:
+        try:
+            user_input = input("You: ").strip()
 
-while True:
-    text = input("You: ").strip()
-    if not text:
-        continue
+            if user_input.lower() in ["exit", "quit"]:
+                print("👋 Omni shutting down")
+                break
 
-    data = parse(text)
-    intent = data["intent"]
+            action = parse(user_input)
 
-    if intent == "exit":
-        print("Omni: Goodbye.")
-        break
+            if action.get("command") == "unknown":
+                print("Omni: I don't understand that yet.")
+                continue
 
-    if intent == "set_name":
-        set_name(data["name"])
-        print(f"Omni: Nice to meet you, {data['name']}.")
-        continue
+            result = execute(action)
+            print("Omni:", result)
 
-    if intent == "get_name":
-        print("Omni:", get_name() or "I don't know yet.")
-        continue
+        except KeyboardInterrupt:
+            print("\n👋 Interrupted")
+            break
 
-    if intent == "mode":
-        mode = data["mode"]
-        print(f"Omni: {mode.capitalize()} mode activated.")
-        continue
+        except Exception as e:
+            print("❌ Error:", e)
 
-    if intent == "explain_hacking":
-        print("Omni (GamkersGPT):")
-        print(explain(text))
-        continue
-
-    print("Omni: I am still learning.")
+if __name__ == "__main__":
+    main()
