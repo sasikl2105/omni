@@ -1,56 +1,64 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+
+from core.security import (
+    issue_challenge,
+    verify_challenge,
+    is_session_valid
+)
 from core.brain import parse
 from core.executor import execute
-
-TOKEN = "omni-local-token"
 
 
 class RemoteHandler(BaseHTTPRequestHandler):
 
-    def do_POST(self):
-        if self.path != "/command":
-            self.send_response(404)
-            self.end_headers()
-            return
+    def _json(self, code, payload):
+        self.send_response(code)
+        self.send_header("Content-Type", "application/json")
+        self.end_headers()
+        self.wfile.write(json.dumps(payload).encode())
 
+    def do_POST(self):
         length = int(self.headers.get("Content-Length", 0))
-        body = self.rfile.read(length).decode()
+        body = self.rfile.read(length).decode() if length else "{}"
 
         try:
             data = json.loads(body)
         except Exception:
-            self.send_response(400)
-            self.end_headers()
-            self.wfile.write(b"Invalid JSON")
-            return
+            return self._json(400, {"error": "Invalid JSON"})
 
-        if data.get("token") != TOKEN:
-            self.send_response(403)
-            self.end_headers()
-            self.wfile.write(b"Invalid token")
-            return
+        # ---- AUTH CHALLENGE ----
+        if self.path == "/auth/challenge":
+            challenge = issue_challenge()
+            return self._json(200, {"challenge": challenge})
 
-        text = data.get("command")
-        if not text:
-            self.send_response(400)
-            self.end_headers()
-            self.wfile.write(b"No command")
-            return
+        # ---- AUTH VERIFY ----
+        if self.path == "/auth/verify":
+            session = verify_challenge(
+                data.get("challenge"),
+                data.get("response")
+            )
+            if not session:
+                return self._json(403, {"error": "Auth failed"})
+            return self._json(200, {"session": session})
 
-        action = parse(text)
-        result = execute(action)
+        # ---- COMMAND EXECUTION ----
+        if self.path == "/command":
+            session = self.headers.get("X-Session")
+            if not session or not is_session_valid(session):
+                return self._json(403, {"error": "Invalid session"})
 
-        self.send_response(200)
-        self.send_header("Content-Type", "application/json")
-        self.end_headers()
+            text = data.get("command")
+            if not text:
+                return self._json(400, {"error": "No command"})
 
-        self.wfile.write(
-            json.dumps({"result": result}).encode()
-        )
+            parsed = parse(text)
+            result = execute(parsed)
+            return self._json(200, {"result": result})
+
+        return self._json(404, {"error": "Unknown endpoint"})
 
 
 def start_remote(port=8080):
-    server = HTTPServer(("127.0.0.1", port), RemoteHandler)
-    print(f"📡 Remote server listening on http://127.0.0.1:{port}")
-    server.serve_forever()
+    server = HTTPServer(("0.0.0.0", port), RemoteHandler)
+    return server

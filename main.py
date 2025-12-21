@@ -1,42 +1,47 @@
 import threading
-from core.brain import parse
-from core.executor import execute
+
 from core.remote import start_remote
 
-
-def main():
-    remote_thread = None
-
-    print("🧠 Omni online (Executor Mode)")
-    print("Type commands or 'start remote', 'exit'")
-    print("----------------------------------------")
-
-    while True:
-        try:
-            text = input("You: ").strip()
-        except KeyboardInterrupt:
-            break
-
-        if text == "exit":
-            print("Omni: Goodbye.")
-            break
-
-        if text == "start remote":
-            if remote_thread is None:
-                remote_thread = threading.Thread(
-                    target=start_remote,
-                    daemon=True
-                )
-                remote_thread.start()
-                print("Omni: Remote control started on port 8080")
-            else:
-                print("Omni: Remote already running")
-            continue
-
-        action = parse(text)
-        result = execute(action)
-        print("Omni:", result)
+remote_server = None
 
 
-if __name__ == "__main__":
-    main()
+def run_server(server):
+    print("📡 Remote server running...")
+    server.serve_forever()
+
+
+print("🧠 Omni online (Executor Mode)")
+print("Type 'start remote', 'stop remote', or 'exit'")
+print("----------------------------------------")
+
+while True:
+    text = input("You: ").strip().lower()
+
+    if text == "exit":
+        print("Omni: Goodbye.")
+        break
+
+    if text == "start remote":
+        if remote_server:
+            print("Omni: Remote already running.")
+        else:
+            remote_server = start_remote(8080)
+            t = threading.Thread(
+                target=run_server,
+                args=(remote_server,),
+                daemon=True
+            )
+            t.start()
+            print("Omni: Remote control started on port 8080")
+        continue
+
+    if text == "stop remote":
+        if remote_server:
+            remote_server.shutdown()
+            remote_server = None
+            print("Omni: Remote stopped.")
+        else:
+            print("Omni: Remote not running.")
+        continue
+
+    print("Omni: Unknown command.")
