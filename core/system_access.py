@@ -1,26 +1,24 @@
 import os
 import subprocess
-import json
 
-def is_android():
-    return "ANDROID_ROOT" in os.environ
 
-def battery_status():
-    # Android (Termux)
-    if is_android():
-        try:
-            result = subprocess.check_output(
-                ["termux-battery-status"],
-                stderr=subprocess.DEVNULL
-            )
-            data = json.loads(result.decode())
-            return f"Battery {data.get('percentage')}% ({data.get('status')})"
-        except:
-            return "Battery info unavailable (Termux API not accessible)."
-
-    # Linux (PC)
+def get_cpu_usage():
     try:
-        with open("/sys/class/power_supply/battery/capacity") as f:
-            return f"Battery {f.read().strip()}%"
-    except:
-        return "Battery info unavailable."
+        output = subprocess.check_output(
+            ["top", "-bn1"],
+            stderr=subprocess.DEVNULL
+        ).decode()
+        return output
+    except Exception as e:
+        return f"CPU read failed: {e}"
+
+
+def get_memory_usage():
+    try:
+        output = subprocess.check_output(
+            ["free", "-h"],
+            stderr=subprocess.DEVNULL
+        ).decode()
+        return output
+    except Exception as e:
+        return f"Memory read failed: {e}"

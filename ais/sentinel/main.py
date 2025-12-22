@@ -1,42 +1,22 @@
-import sys
-import os
-import json
+from core.system_access import get_cpu_usage, get_memory_usage
 
-# =========================
-# FIX IMPORT PATH
-# =========================
-ROOT_DIR = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "../../")
-)
-sys.path.insert(0, ROOT_DIR)
 
-from core.ai_brain import think
+class SentinelAI:
+    name = "sentinel"
 
-# =========================
-# LOAD CONFIG
-# =========================
-CONFIG_PATH = os.path.join(os.path.dirname(__file__), "config.json")
+    def respond(self, text: str):
+        t = text.lower()
 
-with open(CONFIG_PATH, "r") as f:
-    profile = json.load(f)
+        if "cpu" in t:
+            return "🛡️ Sentinel — CPU STATUS:\n" + get_cpu_usage()
 
-print(f"{profile['name'].capitalize()} online.")
+        if "memory" in t or "ram" in t:
+            return "🛡️ Sentinel — MEMORY STATUS:\n" + get_memory_usage()
 
-# =========================
-# MAIN LOOP
-# =========================
-while True:
-    try:
-        text = input("> ").strip()
-    except KeyboardInterrupt:
-        print("\nOffline.")
-        break
+        if "monitor" in t:
+            return "🛡️ Sentinel: System monitoring active."
 
-    if not text:
-        continue
+        return "🛡️ Sentinel: Standing by."
 
-    if text == "exit":
-        break
 
-    response = think(profile, text)
-    print(response)
+ai = SentinelAI()
