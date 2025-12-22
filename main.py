@@ -1,20 +1,16 @@
 import threading
-import sys
+import os
 
-from core.executor import execute
 from core.remote import start_remote
-from core.ai_registry import list_ais
-from core.ai_bridge import run_ai
+from core.ai_manager import route_to_ai
 
 remote_server = None
 remote_thread = None
 
-active_ai = None
-ai_process = None
-
-print("🧠 Jarvis online (OMNITRIX MODE)")
-print("Commands: start remote | talk to <ai> | exit ai | exit")
-print("------------------------------------------------------")
+print("----------------------------------------")
+print("🧠 Jarvis online (AI COMMAND GATE MODE)")
+print("Talk to Jarvis. Type 'exit' to quit.")
+print("----------------------------------------")
 
 while True:
     try:
@@ -26,28 +22,11 @@ while True:
     if not text:
         continue
 
-    # ================= AI MODE =================
-    if active_ai:
-        if text == "exit ai":
-            ai_process.terminate()
-            ai_process = None
-            active_ai = None
-            print("Jarvis: Returned to control.")
-            continue
-
-        ai_process.stdin.write(text + "\n")
-        ai_process.stdin.flush()
-
-        reply = ai_process.stdout.readline().strip()
-        print(f"{active_ai}:", reply)
-        continue
-
-    # ================= EXIT =================
     if text == "exit":
         print("Jarvis: Goodbye.")
         break
 
-    # ================= REMOTE =================
+    # -------- REMOTE CONTROL --------
     if text == "start remote":
         if remote_server:
             print("Jarvis: Remote already running.")
@@ -59,26 +38,19 @@ while True:
             daemon=True
         )
         remote_thread.start()
-        print("📡 Remote server started on port 8080")
+
+        print("📡 Remote server running on port 8080.")
         continue
 
-    # ================= TALK TO AI =================
-    if text.startswith("talk to "):
-        ai_name = text.replace("talk to ", "").strip()
-
-        if ai_name not in list_ais():
-            print(f"Jarvis: AI '{ai_name}' not found.")
-            continue
-
-        ai_process = run_ai(ai_name)
-        if not ai_process:
-            print("Jarvis: Failed to start AI.")
-            continue
-
-        active_ai = ai_name
-        print(f"Jarvis: Connected to {ai_name}.")
+    if text == "stop remote":
+        if remote_server:
+            remote_server.shutdown()
+            remote_server = None
+            print("Jarvis: Remote stopped.")
+        else:
+            print("Jarvis: Remote not running.")
         continue
 
-    # ================= LOCAL =================
-    result = execute({"command": text})
-    print("Jarvis:", result)
+    # -------- AI ROUTING --------
+    response = route_to_ai(text)
+    print("Jarvis:", response)
