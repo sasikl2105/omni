@@ -1,0 +1,16 @@
+{
+  "name": "Sentinel",
+  "created_by": "Jarvis",
+  "created_at": "2025-12-22T09:22:55.246041",
+  "abilities": [
+    "monitoring",
+    "defense"
+  ],
+  "permissions": [
+    "filesystem"
+  ],
+  "restrictions": [
+    "no_self_modify",
+    "no_network_access"
+  ]
+}

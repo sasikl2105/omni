@@ -1,0 +1,11 @@
+{
+    "name": "Nova",
+    "abilities": [
+        "answer questions"
+    ],
+    "permissions": {
+        "system": false,
+        "shell": false,
+        "network": false
+    }
+}

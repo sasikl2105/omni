@@ -1,0 +1,11 @@
+{
+  "name": "sentinel",
+  "abilities": [
+    "alert",
+    "logging"
+  ],
+  "permissions": [
+    "network"
+  ],
+  "locked": true
+}

@@ -1,0 +1,11 @@
+{
+  "name": "nova",
+  "abilities": [
+    "thinking",
+    "conversation"
+  ],
+  "permissions": [
+    "messaging"
+  ],
+  "locked": false
+}

@@ -52,4 +52,15 @@ def execute(action: dict) -> str:
         except Exception as e:
             return f"❌ Command failed: {e}"
 
+# ---- AI CREATION ----
+    if cmd.startswith("create ai"):
+        try:
+            parts = cmd.replace("create ai", "").strip().split(":")
+            name = parts[0].strip()
+            abilities = [a.strip() for a in parts[1].split(",")]
+        except Exception:
+            return "Usage: create ai <name> : ability1, ability2"
+
+        from core.ai_forge import create_ai
+        return create_ai(name, abilities)
     return "Action not allowed."

@@ -1,0 +1,14 @@
+[
+  {
+    "time": 1766397071.4581776,
+    "event": "Received input: scan network"
+  },
+  {
+    "time": 1766397087.3775191,
+    "event": "Received input: attack intruder"
+  },
+  {
+    "time": 1766397243.8047426,
+    "event": "Messaged nova: intrusion detected"
+  }
+]
