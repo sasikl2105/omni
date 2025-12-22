@@ -1,49 +1,55 @@
 import os
 import subprocess
+from core.deployer import deploy_to_host
 
-ALLOWED_COMMANDS = {
-    "system info": "system_info",
-    "system_info": "system_info",
-    "list files": "list_files",
-    "list_files": "list_files",
-    "run": "shell",
-}
+SAFE_COMMANDS = [
+    "system info",
+    "list files",
+    "pwd"
+]
+
 
 def execute(action: dict) -> str:
-    cmd = action.get("command", "").strip().lower()
+    cmd = action.get("command", "").strip()
 
-    if cmd not in ALLOWED_COMMANDS:
-        return "Action not allowed."
-
-    cmd_key = ALLOWED_COMMANDS[cmd]
-
-    # ---- SYSTEM INFO ----
-    if cmd_key == "system_info":
+    # ---------- SYSTEM ----------
+    if cmd == "system info":
         return os.popen("uname -a").read()
 
-    # ---- LIST FILES ----
-    if cmd_key == "list_files":
-        path = action.get("path", ".")
+    if cmd == "list files":
+        return "\n".join(os.listdir("."))
+
+    if cmd == "pwd":
+        return os.getcwd()
+
+    # ---------- DEPLOY ----------
+    if cmd.startswith("deploy "):
+        """
+        deploy user@host
+        """
         try:
-            return "\n".join(os.listdir(path))
+            target = cmd.replace("deploy ", "").strip()
+            user, host = target.split("@")
+            return deploy_to_host(user, host)
         except Exception as e:
-            return f"Error: {e}"
+            return f"❌ Deploy failed: {e}"
 
-    # ---- SHELL COMMAND ----
-    if cmd_key == "shell":
-        shell_cmd = action.get("shell_cmd")
-        if not shell_cmd:
-            return "No shell command provided."
+    # ---------- SHELL ----------
+    if cmd.startswith("run "):
+        shell_cmd = cmd.replace("run ", "", 1)
+
+        # HARD BLOCK
+        if "rm -rf /" in shell_cmd:
+            return "❌ Shell command blocked for safety."
 
         try:
-            out = subprocess.check_output(
+            return subprocess.check_output(
                 shell_cmd,
                 shell=True,
                 stderr=subprocess.STDOUT,
                 timeout=5
-            )
-            return out.decode()
+            ).decode()
         except Exception as e:
-            return f"Shell error: {e}"
+            return f"❌ Command failed: {e}"
 
-    return "Unhandled command."
+    return "Action not allowed."

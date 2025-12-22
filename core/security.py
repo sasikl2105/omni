@@ -2,21 +2,28 @@ import hashlib
 import secrets
 import time
 
-# In-memory stores (Stage 4 – simple but solid)
+# =========================
+# CONFIG
+# =========================
+PASSWORD = "jarvis-secret"   # later move to env
+SESSION_TTL = 600            # 10 minutes
+
+# =========================
+# STATE (RAM ONLY)
+# =========================
 _challenges = {}
 _sessions = {}
 
-PASSWORD = "jarvis-secret"
-SESSION_TTL = 300  # 5 minutes
-
-
+# =========================
+# AUTH
+# =========================
 def issue_challenge():
     challenge = secrets.token_hex(16)
     _challenges[challenge] = time.time()
     return challenge
 
 
-def verify_challenge(challenge: str, response: str):
+def verify_challenge(challenge, response):
     if challenge not in _challenges:
         return None
 
@@ -24,24 +31,22 @@ def verify_challenge(challenge: str, response: str):
         (PASSWORD + challenge).encode()
     ).hexdigest()
 
-    # Remove challenge (one-time use)
-    del _challenges[challenge]
-
-    if response != expected:
+    if expected != response:
         return None
 
-    # Create session
     session = secrets.token_hex(24)
-    _sessions[session] = time.time()
+    _sessions[session] = time.time() + SESSION_TTL
+
+    del _challenges[challenge]
     return session
 
 
-def is_session_valid(session: str) -> bool:
-    ts = _sessions.get(session)
-    if not ts:
+def validate_session(session):
+    expiry = _sessions.get(session)
+    if not expiry:
         return False
 
-    if time.time() - ts > SESSION_TTL:
+    if time.time() > expiry:
         del _sessions[session]
         return False
 

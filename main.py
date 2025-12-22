@@ -1,47 +1,52 @@
 import threading
-
+from core.executor import execute
 from core.remote import start_remote
 
 remote_server = None
+remote_thread = None
 
-
-def run_server(server):
-    print("📡 Remote server running...")
-    server.serve_forever()
-
-
-print("🧠 Omni online (Executor Mode)")
-print("Type 'start remote', 'stop remote', or 'exit'")
+print("🧠 Jarvis online (VENOM MODE)")
+print("Type commands or 'exit'")
 print("----------------------------------------")
 
 while True:
-    text = input("You: ").strip().lower()
-
-    if text == "exit":
-        print("Omni: Goodbye.")
+    try:
+        text = input("You: ").strip()
+    except KeyboardInterrupt:
+        print("\nBye.")
         break
 
+    if not text:
+        continue
+
+    if text == "exit":
+        print("Jarvis: Goodbye.")
+        break
+
+    # ---------- REMOTE ----------
     if text == "start remote":
         if remote_server:
-            print("Omni: Remote already running.")
-        else:
-            remote_server = start_remote(8080)
-            t = threading.Thread(
-                target=run_server,
-                args=(remote_server,),
-                daemon=True
-            )
-            t.start()
-            print("Omni: Remote control started on port 8080")
+            print("Jarvis: Remote already running.")
+            continue
+
+        remote_server = start_remote()
+        remote_thread = threading.Thread(
+            target=remote_server.serve_forever,
+            daemon=True
+        )
+        remote_thread.start()
+        print("📡 Remote server running on port 8080")
         continue
 
     if text == "stop remote":
         if remote_server:
             remote_server.shutdown()
             remote_server = None
-            print("Omni: Remote stopped.")
+            print("Jarvis: Remote stopped.")
         else:
-            print("Omni: Remote not running.")
+            print("Jarvis: Remote not running.")
         continue
 
-    print("Omni: Unknown command.")
+    # ---------- EXECUTE ----------
+    result = execute({"command": text})
+    print("Jarvis:", result)

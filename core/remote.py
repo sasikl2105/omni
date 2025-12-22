@@ -1,13 +1,10 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
-from core.security import (
-    issue_challenge,
-    verify_challenge,
-    is_session_valid
-)
-from core.brain import parse
 from core.executor import execute
+from core.security import issue_challenge, verify_challenge, validate_session
+
+PORT = 8080
 
 
 class RemoteHandler(BaseHTTPRequestHandler):
@@ -20,19 +17,17 @@ class RemoteHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         length = int(self.headers.get("Content-Length", 0))
-        body = self.rfile.read(length).decode() if length else "{}"
+        body = self.rfile.read(length).decode()
 
         try:
-            data = json.loads(body)
+            data = json.loads(body) if body else {}
         except Exception:
             return self._json(400, {"error": "Invalid JSON"})
 
-        # ---- AUTH CHALLENGE ----
+        # -------- AUTH --------
         if self.path == "/auth/challenge":
-            challenge = issue_challenge()
-            return self._json(200, {"challenge": challenge})
+            return self._json(200, {"challenge": issue_challenge()})
 
-        # ---- AUTH VERIFY ----
         if self.path == "/auth/verify":
             session = verify_challenge(
                 data.get("challenge"),
@@ -42,23 +37,21 @@ class RemoteHandler(BaseHTTPRequestHandler):
                 return self._json(403, {"error": "Auth failed"})
             return self._json(200, {"session": session})
 
-        # ---- COMMAND EXECUTION ----
+        # -------- COMMAND --------
         if self.path == "/command":
             session = self.headers.get("X-Session")
-            if not session or not is_session_valid(session):
+            if not session or not validate_session(session):
                 return self._json(403, {"error": "Invalid session"})
 
-            text = data.get("command")
-            if not text:
+            cmd = data.get("command")
+            if not cmd:
                 return self._json(400, {"error": "No command"})
 
-            parsed = parse(text)
-            result = execute(parsed)
+            result = execute({"command": cmd}, source="remote")
             return self._json(200, {"result": result})
 
-        return self._json(404, {"error": "Unknown endpoint"})
+        return self._json(404, {"error": "Not found"})
 
 
-def start_remote(port=8080):
-    server = HTTPServer(("0.0.0.0", port), RemoteHandler)
-    return server
+def start_remote():
+    return HTTPServer(("127.0.0.1", PORT), RemoteHandler)
