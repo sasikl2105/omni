@@ -1,32 +1,24 @@
-def execute_ai_response(ai_name, response):
-    """
-    Normalize AI responses so Jarvis never crashes.
-    Supports:
-    - string responses
-    - dict-based action responses
-    """
+# core/ai_bridge.py
+from core.ai_registry import get_ai
 
-    # ===============================
-    # SIMPLE STRING RESPONSE
-    # ===============================
-    if isinstance(response, str):
-        return f"[{ai_name.upper()}]: {response}"
+def explain_event(event):
+    nova = get_ai("nova")
+    if not nova:
+        return "Nova not available."
 
-    # ===============================
-    # STRUCTURED RESPONSE (FUTURE)
-    # ===============================
-    if isinstance(response, dict):
-        action = response.get("action")
+    etype = event["type"]
+    payload = event["payload"]
 
-        if action == "say":
-            return f"[{ai_name.upper()}]: {response.get('text', '')}"
+    if etype == "cpu_alert":
+        return nova.respond(
+            f"CPU usage is very high at {payload['usage']}%. "
+            "Explain what this means."
+        )
 
-        if action == "error":
-            return f"[{ai_name.upper()} ERROR]: {response.get('message', '')}"
+    if etype == "mem_alert":
+        return nova.respond(
+            f"Memory usage is very high at {payload['usage']}%. "
+            "Explain what this means."
+        )
 
-        return f"[{ai_name.upper()}]: Unsupported action."
-
-    # ===============================
-    # FALLBACK
-    # ===============================
-    return f"[{ai_name.upper()}]: Invalid response format."
+    return "Unknown event."

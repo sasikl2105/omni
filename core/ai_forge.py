@@ -1,56 +1,78 @@
 import os
 import json
-from datetime import datetime
 
-AIS_DIR = "ais"
+BASE_DIR = os.path.expanduser("~/omni/ais")
 
 
-def create_ai(name, abilities, permissions=None):
-    name = name.lower()
-    ai_path = os.path.join(AIS_DIR, name)
+def _ai_path(name):
+    return os.path.join(BASE_DIR, name)
 
-    if os.path.exists(ai_path):
+
+def create_ai(name, abilities="", permissions=""):
+    name = name.lower().strip()
+    path = _ai_path(name)
+
+    if os.path.exists(path):
         return f"AI '{name}' already exists."
 
-    os.makedirs(ai_path, exist_ok=True)
+    os.makedirs(path, exist_ok=True)
 
-    rules = {
-        "name": name.capitalize(),
-        "created_by": "Jarvis",
-        "created_at": datetime.utcnow().isoformat(),
-        "abilities": abilities,
-        "permissions": permissions or [],
-        "restrictions": [
-            "no_self_modify",
-            "no_network_access"
-        ]
+    config = {
+        "name": name,
+        "abilities": [a.strip() for a in abilities.split(",") if a.strip()],
+        "permissions": [p.strip() for p in permissions.split(",") if p.strip()],
+        "locked": True
     }
 
-    with open(os.path.join(ai_path, "rules.json"), "w") as f:
-        json.dump(rules, f, indent=2)
+    with open(os.path.join(path, "config.json"), "w") as f:
+        json.dump(config, f, indent=2)
 
-    brain_code = f'''import json
+    # Minimal AI main.py
+    with open(os.path.join(path, "main.py"), "w") as f:
+        f.write(f'''import json
 
-def load_rules():
-    with open("rules.json") as f:
-        return json.load(f)
+with open("config.json") as f:
+    config = json.load(f)
 
-def respond(text):
-    rules = load_rules()
-    abilities = ", ".join(rules["abilities"])
-    return f"I am {{rules['name']}}, created by Jarvis. My abilities: {{abilities}}."
+print("{name.capitalize()} online.")
 
-if __name__ == "__main__":
-    rules = load_rules()
-    print(f"{{rules['name']}} online.")
-    while True:
-        text = input("> ")
-        if text.lower() in ("exit", "quit"):
-            break
-        print(respond(text))
-'''
+while True:
+    text = input("> ").strip()
+    if text == "exit":
+        break
 
-    with open(os.path.join(ai_path, "main.py"), "w") as f:
-        f.write(brain_code)
+    if config.get("locked"):
+        print("I am restricted and cannot respond.")
+        continue
 
-    return f"AI '{name}' created successfully."
+    print(f"I am {name.capitalize()}, created by Jarvis. My abilities: {{', '.join(config['abilities'])}}.")
+''')
+
+    return f"AI '{name}' created and locked."
+
+
+def grant_powers(name, abilities="", permissions=""):
+    name = name.lower().strip()
+    path = _ai_path(name)
+
+    if not os.path.exists(path):
+        return f"AI '{name}' does not exist."
+
+    config_path = os.path.join(path, "config.json")
+    if not os.path.exists(config_path):
+        return f"AI '{name}' config missing."
+
+    with open(config_path) as f:
+        config = json.load(f)
+
+    new_abilities = [a.strip() for a in abilities.split(",") if a.strip()]
+    new_permissions = [p.strip() for p in permissions.split(",") if p.strip()]
+
+    config["abilities"] = list(set(config["abilities"] + new_abilities))
+    config["permissions"] = list(set(config["permissions"] + new_permissions))
+    config["locked"] = False
+
+    with open(config_path, "w") as f:
+        json.dump(config, f, indent=2)
+
+    return f"AI '{name}' unlocked and activated."

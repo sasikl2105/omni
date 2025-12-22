@@ -1,56 +1,37 @@
-import threading
-import os
-
-from core.remote import start_remote
-from core.ai_manager import route_to_ai
-
-remote_server = None
-remote_thread = None
+from core.ai_manager import route
+from core.ai_manager import start_background_monitor
+from core.ai_manager import route
+from core.ai_memory import remember
 
 print("----------------------------------------")
-print("🧠 Jarvis online (AI COMMAND GATE MODE)")
-print("Talk to Jarvis. Type 'exit' to quit.")
+print("🧠 Jarvis online (STABLE CORE MODE)")
+print("Type commands or 'exit'")
 print("----------------------------------------")
 
+start_background_monitor()
 while True:
     try:
         text = input("You: ").strip()
     except KeyboardInterrupt:
-        print("\nJarvis: Shutdown.")
+        print("\nJarvis: Goodbye.")
         break
 
     if not text:
         continue
 
-    if text == "exit":
+    if text.lower() == "exit":
         print("Jarvis: Goodbye.")
         break
 
-    # -------- REMOTE CONTROL --------
-    if text == "start remote":
-        if remote_server:
-            print("Jarvis: Remote already running.")
-            continue
+    # -------- ROUTE TO AI --------
+    response = route(text)
 
-        remote_server = start_remote()
-        remote_thread = threading.Thread(
-            target=remote_server.serve_forever,
-            daemon=True
-        )
-        remote_thread.start()
+    # -------- OUTPUT --------
+    if response:
+        print("Jarvis:", response)
+    else:
+        print("Jarvis: ...")
 
-        print("📡 Remote server running on port 8080.")
-        continue
-
-    if text == "stop remote":
-        if remote_server:
-            remote_server.shutdown()
-            remote_server = None
-            print("Jarvis: Remote stopped.")
-        else:
-            print("Jarvis: Remote not running.")
-        continue
-
-    # -------- AI ROUTING --------
-    response = route_to_ai(text)
-    print("Jarvis:", response)
+    # -------- MEMORY --------
+    remember("jarvis", "user", text)
+    remember("jarvis", "assistant", response)

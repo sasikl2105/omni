@@ -2,7 +2,11 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
 from core.executor import execute
-from core.security import issue_challenge, verify_challenge, validate_session
+from core.security import (
+    issue_challenge,
+    verify_challenge,
+    validate_session
+)
 
 PORT = 8080
 
@@ -26,7 +30,8 @@ class RemoteHandler(BaseHTTPRequestHandler):
 
         # -------- AUTH --------
         if self.path == "/auth/challenge":
-            return self._json(200, {"challenge": issue_challenge()})
+            challenge = issue_challenge()
+            return self._json(200, {"challenge": challenge})
 
         if self.path == "/auth/verify":
             session = verify_challenge(
@@ -45,13 +50,14 @@ class RemoteHandler(BaseHTTPRequestHandler):
 
             cmd = data.get("command")
             if not cmd:
-                return self._json(400, {"error": "No command"})
+                return self._json(400, {"error": "No command provided"})
 
-            result = execute({"command": cmd}, source="remote")
+            result = execute({"command": cmd})
             return self._json(200, {"result": result})
 
         return self._json(404, {"error": "Not found"})
 
 
 def start_remote():
-    return HTTPServer(("127.0.0.1", PORT), RemoteHandler)
+    # 🔥 IMPORTANT: 0.0.0.0 = ANY DEVICE CAN CONNECT (VENOM MODE)
+    return HTTPServer(("0.0.0.0", PORT), RemoteHandler)

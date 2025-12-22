@@ -1,0 +1,132 @@
+[
+  {
+    "time": "2025-12-22T19:20:59.228446",
+    "role": "user",
+    "content": "hello"
+  },
+  {
+    "time": "2025-12-22T19:20:59.230132",
+    "role": "assistant",
+    "content": "You said: hello"
+  },
+  {
+    "time": "2025-12-22T19:21:11.773228",
+    "role": "user",
+    "content": "check cpu usage"
+  },
+  {
+    "time": "2025-12-22T19:21:11.774681",
+    "role": "assistant",
+    "content": "You said: check cpu usage"
+  },
+  {
+    "time": "2025-12-22T19:21:27.205857",
+    "role": "user",
+    "content": "check memory"
+  },
+  {
+    "time": "2025-12-22T19:21:27.208364",
+    "role": "assistant",
+    "content": "You said: check memory"
+  },
+  {
+    "time": "2025-12-22T19:24:48.225584",
+    "role": "user",
+    "content": "what is gravity"
+  },
+  {
+    "time": "2025-12-22T19:24:48.227150",
+    "role": "assistant",
+    "content": "Gravity is the force that pulls objects toward each other."
+  },
+  {
+    "time": "2025-12-22T19:24:54.318006",
+    "role": "user",
+    "content": "hello"
+  },
+  {
+    "time": "2025-12-22T19:24:54.320552",
+    "role": "assistant",
+    "content": "You said: hello"
+  },
+  {
+    "time": "2025-12-22T19:27:38.008071",
+    "role": "user",
+    "content": "what is gravity"
+  },
+  {
+    "time": "2025-12-22T19:27:38.010794",
+    "role": "assistant",
+    "content": "Gravity is the force that pulls objects toward each other."
+  },
+  {
+    "time": "2025-12-22T19:29:33.671454",
+    "role": "user",
+    "content": "what is gravity"
+  },
+  {
+    "time": "2025-12-22T19:29:33.672918",
+    "role": "assistant",
+    "content": "Gravity is the force that pulls objects toward each other."
+  },
+  {
+    "time": "2025-12-22T19:31:48.744392",
+    "role": "user",
+    "content": "what is gravity"
+  },
+  {
+    "time": "2025-12-22T19:31:48.745689",
+    "role": "assistant",
+    "content": "Gravity is the force that pulls objects toward each other."
+  },
+  {
+    "time": "2025-12-22T19:40:23.978154",
+    "role": "user",
+    "content": "hi"
+  },
+  {
+    "time": "2025-12-22T19:40:23.981829",
+    "role": "assistant",
+    "content": "You said: hi"
+  },
+  {
+    "time": "2025-12-22T19:40:31.929357",
+    "role": "user",
+    "content": "what is gravity"
+  },
+  {
+    "time": "2025-12-22T19:40:31.932733",
+    "role": "assistant",
+    "content": "Gravity is the force that pulls objects toward each other."
+  },
+  {
+    "time": "2025-12-22T19:45:02.256263",
+    "role": "user",
+    "content": "what is gravity"
+  },
+  {
+    "time": "2025-12-22T19:45:02.259785",
+    "role": "assistant",
+    "content": "Gravity is the force that pulls objects toward each other."
+  },
+  {
+    "time": "2025-12-22T19:48:17.712107",
+    "role": "user",
+    "content": "what is gravity"
+  },
+  {
+    "time": "2025-12-22T19:48:17.714415",
+    "role": "assistant",
+    "content": "Gravity is the force that pulls objects toward each other."
+  },
+  {
+    "time": "2025-12-22T19:58:13.117911",
+    "role": "user",
+    "content": "what is gravity"
+  },
+  {
+    "time": "2025-12-22T19:58:13.121016",
+    "role": "assistant",
+    "content": "Gravity is the force that pulls objects toward each other."
+  }
+]

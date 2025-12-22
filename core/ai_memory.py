@@ -1,37 +1,51 @@
 import json
 import os
-import time
+from datetime import datetime
 
-MEMORY_DIR = os.path.expanduser("~/omni/data/memory")
+MEMORY_DIR = os.path.join(
+    os.path.dirname(__file__),
+    "..",
+    "data",
+    "memory"
+)
 
 os.makedirs(MEMORY_DIR, exist_ok=True)
 
 
-def _path(name):
-    return os.path.join(MEMORY_DIR, f"{name}.json")
+def _memory_path(ai_name):
+    return os.path.join(MEMORY_DIR, f"{ai_name}.json")
 
 
-def load_memory(name):
-    path = _path(name)
+def load_memory(ai_name):
+    path = _memory_path(ai_name)
     if not os.path.exists(path):
         return []
 
-    with open(path, "r") as f:
-        return json.load(f)
+    try:
+        with open(path, "r") as f:
+            return json.load(f)
+    except Exception:
+        return []
 
 
-def save_event(name, event):
-    memory = load_memory(name)
-
-    memory.append({
-        "time": time.time(),
-        "event": event
-    })
-
-    with open(_path(name), "w") as f:
+def save_memory(ai_name, memory):
+    path = _memory_path(ai_name)
+    with open(path, "w") as f:
         json.dump(memory, f, indent=2)
 
 
-def recall(name, limit=5):
-    memory = load_memory(name)
+def remember(ai_name, role, content):
+    memory = load_memory(ai_name)
+
+    memory.append({
+        "time": datetime.now().isoformat(),
+        "role": role,
+        "content": content
+    })
+
+    save_memory(ai_name, memory)
+
+
+def recall(ai_name, limit=5):
+    memory = load_memory(ai_name)
     return memory[-limit:]

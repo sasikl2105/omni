@@ -1,24 +1,21 @@
-import os
 import subprocess
-
 
 def get_cpu_usage():
     try:
         output = subprocess.check_output(
-            ["top", "-bn1"],
-            stderr=subprocess.DEVNULL
+            "top -bn1 | grep 'Cpu(s)'",
+            shell=True
         ).decode()
-        return output
+        return output.strip()
     except Exception as e:
-        return f"CPU read failed: {e}"
-
+        return f"CPU read error: {e}"
 
 def get_memory_usage():
     try:
         output = subprocess.check_output(
-            ["free", "-h"],
-            stderr=subprocess.DEVNULL
+            "free -h",
+            shell=True
         ).decode()
-        return output
+        return output.strip()
     except Exception as e:
-        return f"Memory read failed: {e}"
+        return f"Memory read error: {e}"
