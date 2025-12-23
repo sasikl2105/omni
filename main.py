@@ -1,37 +1,44 @@
 from core.ai_manager import route
-from core.ai_manager import start_background_monitor
-from core.ai_manager import route
-from core.ai_memory import remember
+from core.executor import execute
 
 print("----------------------------------------")
 print("🧠 Jarvis online (STABLE CORE MODE)")
 print("Type commands or 'exit'")
 print("----------------------------------------")
 
-start_background_monitor()
+ACTION_PREFIXES = (
+    "deploy ",
+    "run ",
+    "system info",
+    "list files",
+    "pwd",
+    "create ai"
+)
+
 while True:
     try:
         text = input("You: ").strip()
     except KeyboardInterrupt:
-        print("\nJarvis: Goodbye.")
         break
 
     if not text:
         continue
 
-    if text.lower() == "exit":
+    if text == "exit":
         print("Jarvis: Goodbye.")
         break
 
-    # -------- ROUTE TO AI --------
-    response = route(text)
+    # ===============================
+    # 🔥 ACTION INTERCEPT (VENOM)
+    # ===============================
+    if text.startswith(ACTION_PREFIXES):
+        result = execute({"command": text})
+        print("Jarvis:", result)
+        continue
 
-    # -------- OUTPUT --------
+    # ===============================
+    # 🧠 AI ROUTING
+    # ===============================
+    response = route(text)
     if response:
         print("Jarvis:", response)
-    else:
-        print("Jarvis: ...")
-
-    # -------- MEMORY --------
-    remember("jarvis", "user", text)
-    remember("jarvis", "assistant", response)

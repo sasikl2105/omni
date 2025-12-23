@@ -1,55 +1,23 @@
-import os
-import shutil
-import subprocess
-import tarfile
-import time
-
-DEPLOY_DIR = "deploy"
-ARCHIVE = "jarvis_bundle.tar.gz"
+from core.remote_exec import run_remote_command
 
 
-def prepare_bundle():
-    if os.path.exists(DEPLOY_DIR):
-        shutil.rmtree(DEPLOY_DIR)
+def deploy_to_host(user, host):
+    try:
+        print("🖤 Venom Mode: requesting access to", f"{user}@{host}")
 
-    os.mkdir(DEPLOY_DIR)
+        linux_cmd = (
+            "mkdir -p omni_node && "
+            "echo 'print(\"🖤 Venom Node Online\")' > omni_node/node.py"
+        )
 
-    # Copy essential files
-    shutil.copy("main.py", DEPLOY_DIR)
-    shutil.copy("README.md", DEPLOY_DIR)
-    shutil.copytree("core", f"{DEPLOY_DIR}/core")
+        windows_cmd = (
+            "if not exist omni_node mkdir omni_node && "
+            "echo print('🖤 Venom Node Online') > omni_node\\node.py"
+        )
 
-    # Create archive
-    with tarfile.open(ARCHIVE, "w:gz") as tar:
-        tar.add(DEPLOY_DIR)
+        run_remote_command(user, host, linux_cmd, windows_cmd)
 
-    return ARCHIVE
+        return f"🖤 Venom connected to {user}@{host}"
 
-
-def deploy_to_host(user, host, path="~/jarvis"):
-    bundle = prepare_bundle()
-
-    # Create remote directory
-    subprocess.run(
-        f"ssh {user}@{host} 'mkdir -p {path}'",
-        shell=True
-    )
-
-    # Copy bundle
-    subprocess.run(
-        f"scp {bundle} {user}@{host}:{path}/",
-        shell=True
-    )
-
-    # Extract & run
-    cmd = (
-        f"ssh {user}@{host} "
-        f"'cd {path} && "
-        f"tar -xzf {ARCHIVE} && "
-        f"cd deploy && "
-        f"python3 main.py'"
-    )
-
-    subprocess.Popen(cmd, shell=True)
-
-    return f"🕷️ Jarvis deployed to {host}"
+    except Exception as e:
+        return f"❌ Venom deploy failed: {e}"

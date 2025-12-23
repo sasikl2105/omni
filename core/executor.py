@@ -8,11 +8,10 @@ SAFE_COMMANDS = [
     "pwd"
 ]
 
-
 def execute(action: dict) -> str:
     cmd = action.get("command", "").strip()
 
-    # ---------- SYSTEM ----------
+    # ================= SYSTEM INFO =================
     if cmd == "system info":
         return os.popen("uname -a").read()
 
@@ -22,11 +21,8 @@ def execute(action: dict) -> str:
     if cmd == "pwd":
         return os.getcwd()
 
-    # ---------- DEPLOY ----------
+    # ================= DEPLOY (VENOM MODE) =================
     if cmd.startswith("deploy "):
-        """
-        deploy user@host
-        """
         try:
             target = cmd.replace("deploy ", "").strip()
             user, host = target.split("@")
@@ -34,7 +30,7 @@ def execute(action: dict) -> str:
         except Exception as e:
             return f"❌ Deploy failed: {e}"
 
-    # ---------- SHELL ----------
+    # ================= SHELL =================
     if cmd.startswith("run "):
         shell_cmd = cmd.replace("run ", "", 1)
 
@@ -52,7 +48,7 @@ def execute(action: dict) -> str:
         except Exception as e:
             return f"❌ Command failed: {e}"
 
-# ---- AI CREATION ----
+    # ================= AI CREATION =================
     if cmd.startswith("create ai"):
         try:
             parts = cmd.replace("create ai", "").strip().split(":")
@@ -63,4 +59,5 @@ def execute(action: dict) -> str:
 
         from core.ai_forge import create_ai
         return create_ai(name, abilities)
+
     return "Action not allowed."

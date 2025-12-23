@@ -128,5 +128,125 @@
     "time": "2025-12-22T19:58:13.121016",
     "role": "assistant",
     "content": "Gravity is the force that pulls objects toward each other."
+  },
+  {
+    "time": "2025-12-22T20:16:47.383835",
+    "role": "user",
+    "content": "what is gravity"
+  },
+  {
+    "time": "2025-12-22T20:16:47.387649",
+    "role": "assistant",
+    "content": "Gravity is the force that pulls objects toward each other."
+  },
+  {
+    "time": "2025-12-22T20:16:55.010512",
+    "role": "user",
+    "content": "what is marine"
+  },
+  {
+    "time": "2025-12-22T20:16:55.014415",
+    "role": "assistant",
+    "content": "You said: what is marine"
+  },
+  {
+    "time": "2025-12-22T20:17:20.801121",
+    "role": "user",
+    "content": "what is photosynthesis"
+  },
+  {
+    "time": "2025-12-22T20:17:20.805022",
+    "role": "assistant",
+    "content": "You said: what is photosynthesis"
+  },
+  {
+    "time": "2025-12-22T20:17:37.324301",
+    "role": "user",
+    "content": "what is marine"
+  },
+  {
+    "time": "2025-12-22T20:17:37.327114",
+    "role": "assistant",
+    "content": "You said: what is marine"
+  },
+  {
+    "time": "2025-12-22T20:17:46.126396",
+    "role": "user",
+    "content": "what is marine"
+  },
+  {
+    "time": "2025-12-22T20:17:46.130336",
+    "role": "assistant",
+    "content": "You said: what is marine"
+  },
+  {
+    "time": "2025-12-22T20:25:07.765411",
+    "role": "user",
+    "content": "deploy user@laptop_ip"
+  },
+  {
+    "time": "2025-12-22T20:25:07.768918",
+    "role": "assistant",
+    "content": "You said: deploy user@laptop_ip"
+  },
+  {
+    "time": "2025-12-22T20:27:45.229047",
+    "role": "user",
+    "content": "python main.py"
+  },
+  {
+    "time": "2025-12-22T20:27:45.231815",
+    "role": "assistant",
+    "content": "You said: python main.py"
+  },
+  {
+    "time": "2025-12-22T21:59:32.740495",
+    "role": "user",
+    "content": "ssh hp@192.168.172.2"
+  },
+  {
+    "time": "2025-12-22T21:59:32.748097",
+    "role": "assistant",
+    "content": "You said: ssh hp@192.168.172.2"
+  },
+  {
+    "time": "2025-12-22T22:00:21.395780",
+    "role": "user",
+    "content": "deployy hp@192.168.172.2"
+  },
+  {
+    "time": "2025-12-22T22:00:21.401606",
+    "role": "assistant",
+    "content": "You said: deployy hp@192.168.172.2"
+  },
+  {
+    "time": "2025-12-22T22:04:02.167883",
+    "role": "user",
+    "content": "ssh hp@192.168.172.2"
+  },
+  {
+    "time": "2025-12-22T22:04:02.172658",
+    "role": "assistant",
+    "content": "You said: ssh hp@192.168.172.2"
+  },
+  {
+    "time": "2025-12-23T22:04:23.687371",
+    "role": "user",
+    "content": "1234"
+  },
+  {
+    "time": "2025-12-23T22:04:23.691213",
+    "role": "assistant",
+    "content": "You said: 1234"
+  },
+  {
+    "time": "2025-12-23T22:04:51.231273",
+    "role": "user",
+    "content": "deploy"
+  },
+  {
+    "time": "2025-12-23T22:04:51.235875",
+    "role": "assistant",
+    "content": "You said: deploy"
   }
 ]
