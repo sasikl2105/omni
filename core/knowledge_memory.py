@@ -1,28 +1,30 @@
 import json
 import os
-from datetime import datetime
+import time
 
-MEMORY_FILE = os.path.expanduser("~/omni/data/memory/knowledge.json")
+KNOWLEDGE_PATH = os.path.expanduser(
+    "~/omni/data/memory/knowledge.json"
+)
 
 def _load():
-    if not os.path.exists(MEMORY_FILE):
+    if not os.path.exists(KNOWLEDGE_PATH):
         return {}
-    with open(MEMORY_FILE, "r") as f:
+    with open(KNOWLEDGE_PATH, "r", encoding="utf-8") as f:
         return json.load(f)
 
 def _save(data):
-    with open(MEMORY_FILE, "w") as f:
+    with open(KNOWLEDGE_PATH, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
 
-def recall(question: str):
+def remember_fact(topic, content, source="self"):
     data = _load()
-    return data.get(question.lower())
-
-def remember(question: str, answer: str, source="web"):
-    data = _load()
-    data[question.lower()] = {
-        "answer": answer,
+    data[topic.lower()] = {
+        "content": content,
         "source": source,
-        "learned_at": datetime.utcnow().isoformat()
+        "learned_at": time.time()
     }
     _save(data)
+
+def recall_fact(topic):
+    data = _load()
+    return data.get(topic.lower())
