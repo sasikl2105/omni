@@ -1,15 +1,16 @@
-TITLES = {
-    "super star": "rajinikanth",
-    "superstar": "rajinikanth",
-    "thala": "ajith kumar",
-    "thalapathy": "vijay",
-    "megastar": "chiranjeevi",
-    "ulaganayagan": "kamal haasan"
-}
+from core.title_memory import get_title
 
 def resolve_title(text: str):
-    text = text.lower()
-    for title, person in TITLES.items():
-        if title in text:
-            return person
+    """
+    Try resolving learned titles only.
+    No guessing. No hardcoding.
+    """
+    record = get_title(text)
+    if not record:
+        return None
+
+    # confidence gate
+    if record.get("confidence", 0) >= 0.7:
+        return record["person"]
+
     return None
