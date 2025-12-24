@@ -13,5 +13,85 @@
     "content": "Photosynthesis is a system of biological processes by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy \u2014 typically from sunlight \u2014 into the chemical energy necessary to fuel their metabolism. The term photosynthesis usually refers to oxygenic photosynthesis, a process that releases oxygen as a byproduct of water splitting. Photosynthetic organisms store the converted chemical energy within the bonds of intracellular organic compounds, typically carbohydrates like sugars, starches, phytoglycogen and cellulose. When needing to use this stored energy, an organism's cells then metabolize the organic compounds through cellular respiration. Photosynthesis plays a critical role in producing and maintaining the oxygen content of the Earth's atmosphere, and it supplies most of the biological energy necessary for complex life on Earth.",
     "source": "wikipedia",
     "learned_at": 1766579000.1761203
+  },
+  "black hole": {
+    "content": "A black hole is an astronomical body so compact that its gravity prevents anything, including light, from escaping. Albert Einstein's theory of general relativity predicts that a sufficiently compact mass will form a black hole. The boundary of no escape is called the event horizon. In general relativity, a black hole's event horizon seals an object's fate but produces no locally detectable change when crossed. In many ways, a black hole acts like an ideal black body, as it reflects no light. Quantum field theory in curved spacetime predicts that event horizons emit Hawking radiation, with the same spectrum as a black body of a temperature inversely proportional to its mass. This temperature is of the order of billionths of a kelvin for stellar black holes, making it essentially impossible to observe directly.",
+    "source": "wikipedia",
+    "learned_at": 1766579534.311231
+  },
+  "marine biology": {
+    "content": "Marine biology is the scientific study of the biology of marine life, organisms that inhabit the sea. Given that in biology many phyla, families and genera have some species that live in the sea and others that live on land, marine biology classifies species based on the environment rather than on taxonomy.",
+    "source": "idle-learning",
+    "learned_at": 1766579535.193452
+  },
+  "artificial intelligence": {
+    "content": "Artificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, problem-solving, perception, and decision-making. It is a field of research in computer science that develops and studies methods and software that enable machines to perceive their environment and use learning and intelligence to take actions that maximize their chances of achieving defined goals.",
+    "source": "idle-learning",
+    "learned_at": 1766579655.9524536
+  },
+  "computer virus": {
+    "content": "A computer virus is a type of malware that, when executed, replicates itself by modifying other computer programs and inserting its own code into those programs. If this replication succeeds, the affected areas are then said to be \"infected\" with a computer virus, a metaphor derived from biological viruses.",
+    "source": "idle-learning",
+    "learned_at": 1766579717.5933375
+  },
+  "climate change": {
+    "content": "Present-day climate change includes both global warming\u2014the ongoing increase in global average temperature\u2014and its wider effects on Earth's climate system. Climate change in a broader sense also includes previous long-term changes to Earth's climate. The modern-day rise in global temperatures is driven by human activities, especially fossil fuel burning since the Industrial Revolution. Fossil fuel use, deforestation, and some agricultural and industrial practices release greenhouse gases. These gases absorb some of the heat that the Earth radiates after it warms from sunlight, warming the lower atmosphere. Earth's atmosphere now has roughly 50% more carbon dioxide, the main gas driving global warming, than it did at the end of the pre-industrial era, reaching levels not seen for millions of years.",
+    "source": "idle-learning",
+    "learned_at": 1766579779.042087
+  },
+  "internet": {
+    "content": "The Internet is the global system of interconnected computer networks that uses the Internet protocol suite (TCP/IP) to communicate between networks and devices. It is a network of networks that comprises private, public, academic, business, and government networks of local to global scope, linked by electronic, wireless, and optical networking technologies. The Internet carries a vast range of information services and resources, such as the interlinked hypertext documents and applications of the World Wide Web (WWW), electronic mail, discussion groups, internet telephony, streaming media and file sharing.",
+    "source": "idle-learning",
+    "learned_at": 1766579840.4538975
+  },
+  "stare": {
+    "content": "Stare may refer to:",
+    "source": "wikipedia",
+    "learned_at": 1766579872.7722719
+  },
+  "human brain": {
+    "content": "The human brain is the central organ of the nervous system, and with the spinal cord, comprises the central nervous system. It consists of the cerebrum, the brainstem and the cerebellum. The brain controls most of the activities of the body, processing, integrating, and coordinating the information it receives from the sensory nervous system. The brain integrates sensory information and coordinates instructions sent to the rest of the body.",
+    "source": "idle-learning",
+    "learned_at": 1766579901.3689983
+  },
+  "seclude": {
+    "content": "To shut off or keep apart, as from company, society, etc.; withdraw (oneself) from society or into solitude.",
+    "source": "dictionary",
+    "learned_at": 1766580197.0945177
+  },
+  "marine": {
+    "content": "A soldier, normally a member of a marine corps, trained to serve on board or from a ship",
+    "source": "dictionary",
+    "learned_at": 1766580243.5380225
+  },
+  "solar system": {
+    "content": "The Solar System consists of the Sun and the bodies that orbit it, being a system of masses bound together by gravity. The name comes from S\u014dl, the Latin name for the Sun. It formed about 4.6\u00a0billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled. The fusion of hydrogen into helium inside the Sun's core releases energy, which is primarily emitted through its outer photosphere. This creates a decreasing temperature gradient across the system. Over 99.86% of the Solar System's mass is located within the Sun.",
+    "source": "idle-learning",
+    "learned_at": 1766580401.3732238
+  },
+  "mahatma gandhi": {
+    "content": "Mohandas Karamchand Gandhi was an Indian lawyer, anti-colonial nationalist, and political ethicist who employed nonviolent resistance to lead the successful campaign for India's independence from British rule. He inspired movements for civil rights and freedom across the world. The honorific Mah\u0101tm\u0101, first applied to him in South Africa in 1914, is used worldwide.",
+    "source": "wikipedia",
+    "learned_at": 1766580554.8083332
+  },
+  "william shakespeare": {
+    "content": "William Shakespeare was an English playwright, poet and actor. He is widely regarded as the greatest writer in the English language and the world's pre-eminent dramatist. He is often called England's national poet and the \"Bard of Avon\" or simply \"the Bard\". His extant works, including collaborations, consist of some 39 plays, 154 sonnets, three long narrative poems and a few other verses, some of uncertain authorship. His plays have been translated into every major living language and are performed more often than those of any other playwright. Shakespeare remains arguably the most influential writer in the English language, and his works continue to be studied and reinterpreted.",
+    "source": "wikipedia",
+    "learned_at": 1766581260.2487886
+  },
+  "jesus christ": {
+    "content": "Jesus, also referred to as Jesus Christ, Jesus of Nazareth, and many other names and titles, was a 1st-century Jewish preacher and religious leader in the Roman province of Judaea. He is the central figure of Christianity, the world's largest religion. Most Christians consider Jesus to be the incarnation of God the Son and awaited messiah, or Christ, a descendant from the Davidic line that is prophesied in the Old Testament. Virtually all modern scholars of antiquity agree that Jesus existed historically. Accounts of Jesus's life are contained in the Gospels, especially the four canonical Gospels in the New Testament. Since the Enlightenment, academic research has yielded various views on the historical reliability of the Gospels and how closely they reflect the historical Jesus.",
+    "source": "wikipedia",
+    "learned_at": 1766581291.5503216
+  },
+  "naruto": {
+    "content": "Naruto is a Japanese manga series written and illustrated by Masashi Kishimoto. It tells the story of Naruto Uzumaki, a young, socially isolated ninja who seeks recognition from his peers and dreams of becoming the Hokage, the leader of his village. The story is told in two parts: the first is set in Naruto's pre-teen years, and the second in his teens. The series is based on two one-shot manga by Kishimoto: Karakuri (1995), which earned Kishimoto an honorable mention in Shueisha's monthly Hop Step Award the following year, and Naruto (1997).",
+    "source": "wikipedia",
+    "learned_at": 1766581315.4721298
+  },
+  "stalin": {
+    "content": "Joseph Vissarionovich Stalin was a Soviet revolutionary and politician who led the Soviet Union from 1924 until his death in 1953. He held office as General Secretary of the Communist Party from 1922 to 1952 and as premier from 1941 until his death. Despite initially governing the country as part of a collective leadership, he eventually consolidated power to become a dictator by the 1930s. Stalin codified the party's official interpretation of Marxism as Marxism\u2013Leninism, and his version of it is referred to as Stalinism.",
+    "source": "wikipedia",
+    "learned_at": 1766581379.4838245
   }
 }

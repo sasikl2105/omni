@@ -248,5 +248,45 @@
     "time": "2025-12-23T22:04:51.235875",
     "role": "assistant",
     "content": "You said: deploy"
+  },
+  {
+    "time": "2025-12-23T23:29:15.036098",
+    "role": "user",
+    "content": "exiy"
+  },
+  {
+    "time": "2025-12-23T23:29:15.042496",
+    "role": "assistant",
+    "content": "You said: exiy"
+  },
+  {
+    "time": "2025-12-23T23:29:19.761516",
+    "role": "user",
+    "content": "bye"
+  },
+  {
+    "time": "2025-12-23T23:29:19.766871",
+    "role": "assistant",
+    "content": "You said: bye"
+  },
+  {
+    "time": "2025-12-24T17:54:57.305404",
+    "role": "user",
+    "content": "who is mahathma gandhi"
+  },
+  {
+    "time": "2025-12-24T17:54:57.309591",
+    "role": "assistant",
+    "content": "You said: who is mahathma gandhi"
+  },
+  {
+    "time": "2025-12-24T17:58:05.150564",
+    "role": "user",
+    "content": "who is Mahatma_Gandhi"
+  },
+  {
+    "time": "2025-12-24T17:58:05.155101",
+    "role": "assistant",
+    "content": "You said: who is Mahatma_Gandhi"
   }
 ]
