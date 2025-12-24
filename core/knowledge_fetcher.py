@@ -1,32 +1,28 @@
 import requests
 
-def search_web(query: str) -> str | None:
-    """
-    Fetch short explanation from DuckDuckGo Instant Answer API
-    """
+WIKI_API = "https://en.wikipedia.org/api/rest_v1/page/summary/{}"
+
+HEADERS = {
+    "User-Agent": "JarvisAI/1.0 (learning-bot; contact: local)"
+}
+
+def fetch_knowledge(topic: str) -> str | None:
     try:
-        url = "https://api.duckduckgo.com/"
-        params = {
-            "q": query,
-            "format": "json",
-            "no_html": 1,
-            "skip_disambig": 1
-        }
+        topic = topic.strip().replace(" ", "_")
+        url = WIKI_API.format(topic)
 
-        res = requests.get(url, params=params, timeout=5)
-        data = res.json()
+        r = requests.get(url, headers=HEADERS, timeout=8)
+        if r.status_code != 200:
+            return None
 
-        if data.get("AbstractText"):
-            return data["AbstractText"]
+        data = r.json()
 
-        # fallback: related topics
-        related = data.get("RelatedTopics", [])
-        if related and isinstance(related, list):
-            first = related[0]
-            if isinstance(first, dict) and first.get("Text"):
-                return first["Text"]
+        extract = data.get("extract")
+        if not extract:
+            return None
+
+        # Keep first paragraph only
+        return extract.split("\n")[0]
 
     except Exception:
-        pass
-
-    return None
+        return None
