@@ -1,3 +1,4 @@
+from core.title_resolver import resolve_title
 from core.ai_registry import load_ai
 from core.query_classifier import classify
 from core.name_normalizer import normalize_name
@@ -5,6 +6,7 @@ from core.dictionary_fetcher import fetch_definition
 from core.knowledge_fetcher import fetch_knowledge
 from core.knowledge_memory import recall_fact, remember_fact
 from core.spell_corrector import correct_word
+from core.role_knowledge import get_role_holder
 
 
 def route(text: str):
@@ -12,13 +14,33 @@ def route(text: str):
     clean = text.lower()
     qtype = classify(text)
 
-    # 🧑 PERSON QUESTIONS
+    # ================= ROLE QUESTIONS =================
+    if qtype == "role":
+        role = clean.replace("who is", "").strip()
+
+        holder = get_role_holder(role)
+        if holder:
+            mem = recall_fact(holder)
+            if mem:
+                return mem["content"]
+
+            wiki = fetch_knowledge(holder)
+            if wiki:
+                remember_fact(holder, wiki, source="wikipedia")
+                return wiki
+
+        return "I couldn't find reliable information about this role."
+
+    # ================= PERSON QUESTIONS =================
     if qtype == "person":
         name = clean.replace("who is", "").strip()
-        name = normalize_name(name)
 
-        if isinstance(name, dict) and name.get("ambiguous"):
-            return f"Your question is ambiguous. Did you mean: {', '.join(name['options'])}?"
+        # 🔥 TITLE / NICKNAME RESOLUTION
+        title_match = resolve_title(name)
+        if title_match:
+            name = title_match
+        else:
+            name = normalize_name(name)
 
         mem = recall_fact(name)
         if mem:
@@ -31,7 +53,7 @@ def route(text: str):
 
         return "I couldn't find reliable information about this person."
 
-    # 📖 DEFINITIONS / CONCEPTS
+    # ================= DEFINITIONS / CONCEPTS =================
     topic = (
         clean.replace("what is", "")
         .replace("define", "")
@@ -54,7 +76,7 @@ def route(text: str):
         remember_fact(topic, wiki, source="wikipedia")
         return wiki
 
-    # 🛡️ SYSTEM / MONITORING
+    # ================= SYSTEM / MONITORING =================
     if any(k in clean for k in ["cpu", "memory", "monitor"]):
         ai = load_ai("sentinel")
     else:
