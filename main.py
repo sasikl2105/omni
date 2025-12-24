@@ -1,3 +1,5 @@
+import threading
+from core.idle_learner import idle_learning_loop
 from core.ai_manager import route
 from core.executor import execute
 
@@ -42,3 +44,10 @@ while True:
     response = route(text)
     if response:
         print("Jarvis:", response)
+
+    # Start background idle learning
+    idle_thread = threading.Thread(
+        target=idle_learning_loop,
+        daemon=True
+    )
+    idle_thread.start()
