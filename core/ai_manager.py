@@ -1,31 +1,66 @@
 from core.ai_registry import load_ai
-from core.knowledge_memory import recall, remember
-from core.knowledge_fetcher import search_web
+from core.query_classifier import classify
+from core.name_normalizer import normalize_name
+from core.dictionary_fetcher import fetch_definition
+from core.knowledge_fetcher import fetch_knowledge
+from core.knowledge_memory import recall_fact, remember_fact
+from core.spell_corrector import correct_word
+
 
 def route(text: str):
-    text_l = text.lower()
+    text = text.strip()
+    clean = text.lower()
+    qtype = classify(text)
 
-    # ---------- 1. CHECK KNOWLEDGE MEMORY ----------
-    known = recall(text)
-    if known:
-        return known["answer"]
+    # 🧑 PERSON QUESTIONS
+    if qtype == "person":
+        name = clean.replace("who is", "").strip()
+        name = normalize_name(name)
 
-    # ---------- 2. ROUTE TO AIs ----------
-    if any(k in text_l for k in ["cpu", "memory", "monitor"]):
+        if isinstance(name, dict) and name.get("ambiguous"):
+            return f"Your question is ambiguous. Did you mean: {', '.join(name['options'])}?"
+
+        mem = recall_fact(name)
+        if mem:
+            return mem["content"]
+
+        wiki = fetch_knowledge(name)
+        if wiki:
+            remember_fact(name, wiki, source="wikipedia")
+            return wiki
+
+        return "I couldn't find reliable information about this person."
+
+    # 📖 DEFINITIONS / CONCEPTS
+    topic = (
+        clean.replace("what is", "")
+        .replace("define", "")
+        .strip()
+    )
+
+    topic = correct_word(topic)
+
+    mem = recall_fact(topic)
+    if mem:
+        return mem["content"]
+
+    definition = fetch_definition(topic)
+    if definition:
+        remember_fact(topic, definition, source="dictionary")
+        return definition
+
+    wiki = fetch_knowledge(topic)
+    if wiki:
+        remember_fact(topic, wiki, source="wikipedia")
+        return wiki
+
+    # 🛡️ SYSTEM / MONITORING
+    if any(k in clean for k in ["cpu", "memory", "monitor"]):
         ai = load_ai("sentinel")
-        if ai:
-            return ai.respond(text)
+    else:
+        ai = load_ai("nova")
 
-    ai = load_ai("nova")
-    if ai:
-        response = ai.respond(text)
-        if response and "I am restricted" not in response:
-            return response
+    if not ai:
+        return "No AI available."
 
-    # ---------- 3. WEB LEARNING ----------
-    learned = search_web(text)
-    if learned:
-        remember(text, learned)
-        return learned
-
-    return "I don't know yet, but I will learn."
+    return ai.respond(text)
