@@ -288,5 +288,85 @@
     "time": "2025-12-24T17:58:05.155101",
     "role": "assistant",
     "content": "You said: who is Mahatma_Gandhi"
+  },
+  {
+    "time": "2025-12-24T19:31:27.800222",
+    "role": "user",
+    "content": "nano core/ai_manager.py"
+  },
+  {
+    "time": "2025-12-24T19:31:27.804570",
+    "role": "assistant",
+    "content": "You said: nano core/ai_manager.py"
+  },
+  {
+    "time": "2025-12-24T19:35:13.036822",
+    "role": "user",
+    "content": "who is power star"
+  },
+  {
+    "time": "2025-12-24T19:35:13.046978",
+    "role": "assistant",
+    "content": "You said: who is power star"
+  },
+  {
+    "time": "2025-12-24T19:35:29.309419",
+    "role": "user",
+    "content": "who is super star"
+  },
+  {
+    "time": "2025-12-24T19:35:29.315959",
+    "role": "assistant",
+    "content": "You said: who is super star"
+  },
+  {
+    "time": "2025-12-24T19:39:05.199373",
+    "role": "user",
+    "content": "who is power star"
+  },
+  {
+    "time": "2025-12-24T19:39:05.204833",
+    "role": "assistant",
+    "content": "You said: who is power star"
+  },
+  {
+    "time": "2025-12-24T20:19:58.525143",
+    "role": "user",
+    "content": "what does stare mean"
+  },
+  {
+    "time": "2025-12-24T20:19:58.530713",
+    "role": "assistant",
+    "content": "You said: what does stare mean"
+  },
+  {
+    "time": "2025-12-24T20:20:34.355319",
+    "role": "user",
+    "content": "eixt"
+  },
+  {
+    "time": "2025-12-24T20:20:34.361335",
+    "role": "assistant",
+    "content": "You said: eixt"
+  },
+  {
+    "time": "2025-12-24T21:57:57.438012",
+    "role": "user",
+    "content": "iron man ai"
+  },
+  {
+    "time": "2025-12-24T21:57:57.448291",
+    "role": "assistant",
+    "content": "You said: iron man ai"
+  },
+  {
+    "time": "2025-12-24T22:26:54.860975",
+    "role": "user",
+    "content": "2+2"
+  },
+  {
+    "time": "2025-12-24T22:26:54.875141",
+    "role": "assistant",
+    "content": "You said: 2+2"
   }
 ]

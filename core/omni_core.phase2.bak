@@ -1,0 +1,117 @@
+# core/omni_core.py
+# 🧠 OMNI CORE — Phase 2
+
+from core.intent_engine import detect_intent
+from core.executor import execute
+from core.knowledge_memory import recall_fact, remember_fact
+from core.dictionary_fetcher import fetch_definition
+from core.knowledge_fetcher import fetch_knowledge
+from core.spell_corrector import correct_word
+from core.user_memory import remember, recall, forget
+from core.context import set_context, get_last_explanation
+
+from core.ai_registry import load_ai
+
+
+class OmniCore:
+    def __init__(self):
+        self.nova = load_ai("nova")
+        self.sentinel = load_ai("sentinel")
+
+    def respond(self, text: str) -> str:
+        intent = detect_intent(text)
+
+        # ===== MATH =====
+        if intent == "math":
+            try:
+                return str(eval(text))
+            except:
+                return "I couldn't calculate that."
+
+        # ===== SYSTEM =====
+        if intent == "system":
+            return execute({"command": text})
+
+        # ===== MONITOR =====
+        if intent == "monitor" and self.sentinel:
+            return self.sentinel.respond(text)
+
+        # ===== USER MEMORY =====
+        if intent == "memory":
+            return self.handle_memory(text)
+
+        # ===== KNOWLEDGE =====
+        if intent == "knowledge":
+            return self.handle_knowledge(text)
+
+        # ===== CHAT =====
+        if self.nova:
+            return self.nova.respond(text)
+
+        return "OMNI: Standing by."
+
+    # =========================
+    # 🧠 MEMORY HANDLER
+    # =========================
+    def handle_memory(self, text):
+        t = text.lower()
+
+        if t.startswith("remember "):
+            try:
+                key, value = t.replace("remember ", "").split(" as ")
+                remember(key.strip(), value.strip())
+                return f"I'll remember that {key} is {value}."
+            except:
+                return "Usage: remember <thing> as <value>"
+
+        if t.startswith("forget "):
+            key = t.replace("forget ", "").strip()
+            forget(key)
+            return f"I forgot {key}."
+
+        return "Memory command unclear."
+
+    # =========================
+    # 📚 KNOWLEDGE ENGINE
+    # =========================
+    def handle_knowledge(self, text):
+        clean = text.lower()
+
+        # ===== USER-SELF QUESTIONS (PRIORITY) =====
+        if "my name" in clean:
+            name = recall("my name")
+            if name:
+                return f"Your name is {name.title()}."
+            return "I don't know your name yet. You can tell me using: remember my name as <name>"
+
+        if "my" in clean:
+            key = clean.replace("what is", "").replace("who is", "").strip()
+            val = recall(key)
+            if val:
+                return f"{key.title()} is {val}."
+
+        topic = (
+            clean.replace("what is", "")
+            .replace("define", "")
+            .replace("who is", "")
+            .replace("what does", "")
+            .strip()
+        )
+
+        topic = correct_word(topic)
+
+        mem = recall_fact(topic)
+        if mem and mem.get("content"):
+            return mem["content"]
+
+        definition = fetch_definition(topic)
+        if definition:
+            remember_fact(topic, definition, source="dictionary")
+            return definition
+
+        wiki = fetch_knowledge(topic)
+        if wiki:
+            remember_fact(topic, wiki, source="wikipedia")
+            return wiki
+
+        return f"I don’t know {topic} yet."

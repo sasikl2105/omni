@@ -1,21 +1,11 @@
-import threading
-from core.idle_learner import idle_learning_loop
-from core.ai_manager import route
-from core.executor import execute
+from core.jarvis import Omni
+
+omni = Omni()
 
 print("----------------------------------------")
-print("🧠 Jarvis online (STABLE CORE MODE)")
+print("🧠 OMNI ONLINE — IRON MAN CORE MODE")
 print("Type commands or 'exit'")
 print("----------------------------------------")
-
-ACTION_PREFIXES = (
-    "deploy ",
-    "run ",
-    "system info",
-    "list files",
-    "pwd",
-    "create ai"
-)
 
 while True:
     try:
@@ -26,28 +16,8 @@ while True:
     if not text:
         continue
 
-    if text == "exit":
-        print("Jarvis: Goodbye.")
+    reply = omni.respond(text)
+    print("OMNI:", reply)
+
+    if reply.lower() == "goodbye.":
         break
-
-    # ===============================
-    # 🔥 ACTION INTERCEPT (VENOM)
-    # ===============================
-    if text.startswith(ACTION_PREFIXES):
-        result = execute({"command": text})
-        print("Jarvis:", result)
-        continue
-
-    # ===============================
-    # 🧠 AI ROUTING
-    # ===============================
-    response = route(text)
-    if response:
-        print("Jarvis:", response)
-
-    # Start background idle learning
-    idle_thread = threading.Thread(
-        target=idle_learning_loop,
-        daemon=True
-    )
-    idle_thread.start()

@@ -1,16 +1,30 @@
+# core/dictionary_fetcher.py
+# Dictionary lookup engine for OMNI
+
 import requests
 
-DICT_API = "https://api.dictionaryapi.dev/api/v2/entries/en/{}"
 
-def fetch_definition(word: str) -> str | None:
+def lookup_word(word: str) -> str | None:
+    word = word.lower().strip()
+
     try:
-        r = requests.get(DICT_API.format(word), timeout=8)
+        url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
+        r = requests.get(url, timeout=5)
+
         if r.status_code != 200:
             return None
 
         data = r.json()
-        meaning = data[0]["meanings"][0]
-        definition = meaning["definitions"][0]["definition"]
-        return definition
+        meanings = data[0].get("meanings", [])
+
+        if not meanings:
+            return None
+
+        definitions = meanings[0].get("definitions", [])
+        if not definitions:
+            return None
+
+        return definitions[0].get("definition")
+
     except Exception:
         return None

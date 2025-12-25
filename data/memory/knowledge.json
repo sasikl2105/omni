@@ -1,8 +1,10 @@
 {
   "gravity": {
-    "content": "Gravity is the force that attracts objects with mass.",
+    "content": "The state or condition of having weight; weight; heaviness.",
     "source": "self",
-    "learned_at": 1766512502.6615891
+    "learned_at": 1766512502.6615891,
+    "confidence": 0.8095418010113969,
+    "usage_count": 15
   },
   "camilo": {
     "content": "Camilo is both a given name and a surname. Notable people with the name include:",
@@ -12,62 +14,86 @@
   "photosynthesis": {
     "content": "Photosynthesis is a system of biological processes by which photopigment-bearing autotrophic organisms, such as most plants, algae and cyanobacteria, convert light energy \u2014 typically from sunlight \u2014 into the chemical energy necessary to fuel their metabolism. The term photosynthesis usually refers to oxygenic photosynthesis, a process that releases oxygen as a byproduct of water splitting. Photosynthetic organisms store the converted chemical energy within the bonds of intracellular organic compounds, typically carbohydrates like sugars, starches, phytoglycogen and cellulose. When needing to use this stored energy, an organism's cells then metabolize the organic compounds through cellular respiration. Photosynthesis plays a critical role in producing and maintaining the oxygen content of the Earth's atmosphere, and it supplies most of the biological energy necessary for complex life on Earth.",
     "source": "wikipedia",
-    "learned_at": 1766579000.1761203
+    "learned_at": 1766579000.1761203,
+    "confidence": 0.9988510906198237,
+    "usage_count": 18
   },
   "black hole": {
     "content": "A black hole is an astronomical body so compact that its gravity prevents anything, including light, from escaping. Albert Einstein's theory of general relativity predicts that a sufficiently compact mass will form a black hole. The boundary of no escape is called the event horizon. In general relativity, a black hole's event horizon seals an object's fate but produces no locally detectable change when crossed. In many ways, a black hole acts like an ideal black body, as it reflects no light. Quantum field theory in curved spacetime predicts that event horizons emit Hawking radiation, with the same spectrum as a black body of a temperature inversely proportional to its mass. This temperature is of the order of billionths of a kelvin for stellar black holes, making it essentially impossible to observe directly.",
     "source": "wikipedia",
-    "learned_at": 1766579534.311231
+    "learned_at": 1766579534.311231,
+    "confidence": 0.7267698811569977,
+    "usage_count": 12
   },
   "marine biology": {
     "content": "Marine biology is the scientific study of the biology of marine life, organisms that inhabit the sea. Given that in biology many phyla, families and genera have some species that live in the sea and others that live on land, marine biology classifies species based on the environment rather than on taxonomy.",
     "source": "idle-learning",
-    "learned_at": 1766579535.193452
+    "learned_at": 1766579535.193452,
+    "confidence": 0.6863386767300192,
+    "usage_count": 10
   },
   "artificial intelligence": {
     "content": "Artificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, problem-solving, perception, and decision-making. It is a field of research in computer science that develops and studies methods and software that enable machines to perceive their environment and use learning and intelligence to take actions that maximize their chances of achieving defined goals.",
     "source": "idle-learning",
-    "learned_at": 1766579655.9524536
+    "learned_at": 1766579655.9524536,
+    "confidence": 0.6125128938043558,
+    "usage_count": 6
   },
   "computer virus": {
     "content": "A computer virus is a type of malware that, when executed, replicates itself by modifying other computer programs and inserting its own code into those programs. If this replication succeeds, the affected areas are then said to be \"infected\" with a computer virus, a metaphor derived from biological viruses.",
     "source": "idle-learning",
-    "learned_at": 1766579717.5933375
+    "learned_at": 1766579717.5933375,
+    "confidence": 0.6681641472842407,
+    "usage_count": 9
   },
   "climate change": {
     "content": "Present-day climate change includes both global warming\u2014the ongoing increase in global average temperature\u2014and its wider effects on Earth's climate system. Climate change in a broader sense also includes previous long-term changes to Earth's climate. The modern-day rise in global temperatures is driven by human activities, especially fossil fuel burning since the Industrial Revolution. Fossil fuel use, deforestation, and some agricultural and industrial practices release greenhouse gases. These gases absorb some of the heat that the Earth radiates after it warms from sunlight, warming the lower atmosphere. Earth's atmosphere now has roughly 50% more carbon dioxide, the main gas driving global warming, than it did at the end of the pre-industrial era, reaching levels not seen for millions of years.",
     "source": "idle-learning",
-    "learned_at": 1766579779.042087
+    "learned_at": 1766579779.042087,
+    "confidence": 0.6682752702842985,
+    "usage_count": 9
   },
   "internet": {
     "content": "The Internet is the global system of interconnected computer networks that uses the Internet protocol suite (TCP/IP) to communicate between networks and devices. It is a network of networks that comprises private, public, academic, business, and government networks of local to global scope, linked by electronic, wireless, and optical networking technologies. The Internet carries a vast range of information services and resources, such as the interlinked hypertext documents and applications of the World Wide Web (WWW), electronic mail, discussion groups, internet telephony, streaming media and file sharing.",
     "source": "idle-learning",
-    "learned_at": 1766579840.4538975
+    "learned_at": 1766579840.4538975,
+    "confidence": 0.6907911964706802,
+    "usage_count": 10
   },
   "stare": {
     "content": "Stare may refer to:",
     "source": "wikipedia",
-    "learned_at": 1766579872.7722719
+    "learned_at": 1766579872.7722719,
+    "confidence": 0.9470427955662488,
+    "usage_count": 11
   },
   "human brain": {
     "content": "The human brain is the central organ of the nervous system, and with the spinal cord, comprises the central nervous system. It consists of the cerebrum, the brainstem and the cerebellum. The brain controls most of the activities of the body, processing, integrating, and coordinating the information it receives from the sensory nervous system. The brain integrates sensory information and coordinates instructions sent to the rest of the body.",
     "source": "idle-learning",
-    "learned_at": 1766579901.3689983
+    "learned_at": 1766579901.3689983,
+    "confidence": 0.7442600245015765,
+    "usage_count": 13
   },
   "seclude": {
     "content": "To shut off or keep apart, as from company, society, etc.; withdraw (oneself) from society or into solitude.",
     "source": "dictionary",
-    "learned_at": 1766580197.0945177
+    "learned_at": 1766580197.0945177,
+    "confidence": 0.5127969259364461,
+    "usage_count": 1
   },
   "marine": {
     "content": "A soldier, normally a member of a marine corps, trained to serve on board or from a ship",
     "source": "dictionary",
-    "learned_at": 1766580243.5380225
+    "learned_at": 1766580243.5380225,
+    "confidence": 0.7703773845060555,
+    "usage_count": 6
   },
   "solar system": {
     "content": "The Solar System consists of the Sun and the bodies that orbit it, being a system of masses bound together by gravity. The name comes from S\u014dl, the Latin name for the Sun. It formed about 4.6\u00a0billion years ago when a dense region of a molecular cloud collapsed, creating the Sun and a protoplanetary disc from which the orbiting bodies assembled. The fusion of hydrogen into helium inside the Sun's core releases energy, which is primarily emitted through its outer photosphere. This creates a decreasing temperature gradient across the system. Over 99.86% of the Solar System's mass is located within the Sun.",
     "source": "idle-learning",
-    "learned_at": 1766580401.3732238
+    "learned_at": 1766580401.3732238,
+    "confidence": 0.5945402062457193,
+    "usage_count": 5
   },
   "mahatma gandhi": {
     "content": "Mohandas Karamchand Gandhi was an Indian lawyer, anti-colonial nationalist, and political ethicist who employed nonviolent resistance to lead the successful campaign for India's independence from British rule. He inspired movements for civil rights and freedom across the world. The honorific Mah\u0101tm\u0101, first applied to him in South Africa in 1914, is used worldwide.",
@@ -93,5 +119,111 @@
     "content": "Joseph Vissarionovich Stalin was a Soviet revolutionary and politician who led the Soviet Union from 1924 until his death in 1953. He held office as General Secretary of the Communist Party from 1922 to 1952 and as premier from 1941 until his death. Despite initially governing the country as part of a collective leadership, he eventually consolidated power to become a dictator by the 1930s. Stalin codified the party's official interpretation of Marxism as Marxism\u2013Leninism, and his version of it is referred to as Stalinism.",
     "source": "wikipedia",
     "learned_at": 1766581379.4838245
+  },
+  "test memory": {
+    "content": "This is a test fact",
+    "confidence": 0.5999995354287602,
+    "source": "unknown",
+    "learned_at": 1766586055.1309829,
+    "last_used": 1766586057.1379988,
+    "usage_count": 3
+  },
+  "jarvis": {
+    "content": "Jarvis may refer to:",
+    "source": "wikipedia",
+    "confidence": 0.6,
+    "usage_count": 1,
+    "learned_at": 1766593668.0985265
+  },
+  "science": {
+    "content": "A particular discipline or branch of learning, especially one dealing with measurable or systematic principles rather than intuition or natural ability.",
+    "source": "dictionary",
+    "confidence": 0.6,
+    "usage_count": 1,
+    "learned_at": 1766595381.240454
+  },
+  "ai": {
+    "content": "Artificial Intelligence is the ability of machines to perform tasks that normally require human intelligence.",
+    "source": "dictionary",
+    "confidence": 0.7809450017091025,
+    "usage_count": 7,
+    "learned_at": 1766595391.8906171
+  },
+  "my name": {
+    "content": "My Name may refer to:My Name (band), from South Korea",
+    "source": "wikipedia",
+    "confidence": 0.6,
+    "usage_count": 1,
+    "learned_at": 1766596686.4260962
+  },
+  "ms dhoni": {
+    "content": "Mahendra Singh Dhoni is an Indian professional cricketer who plays as a right-handed batter and a wicket-keeper. Widely regarded as one of the most prolific wicket-keeper batsmen and captains, he represented the Indian cricket team and was the captain of the side in limited overs formats from 2007 to 2017 and in Test cricket from 2008 to 2014. Dhoni has captained the most international matches and is the most successful Indian captain. He has led India to victory in the 2007 ICC World Twenty20, the 2011 Cricket World Cup, and the 2013 ICC Champions Trophy, being the only captain to win three different limited overs ICC tournaments. He also led the teams that won the Asia Cup in 2010 and 2016, and he was a member of the title winning squad in 2018.",
+    "source": "wikipedia",
+    "confidence": 0.7,
+    "usage_count": 2,
+    "learned_at": 1766642310.26494
+  },
+  "rohit sharma": {
+    "content": "Rohit Gurunath Sharma is an Indian international cricketer and the former captain of the Indian national cricket team. He is a right-handed batsman who plays for Mumbai Indians in Indian Premier League and for Mumbai in domestic cricket. In the year 2024 and 2025 he announced his retirement from T20Is and Test Cricket. He was also a member of the teams that won the 2007 T20 World Cup, the 2013 ICC Champions Trophy and was the winning captain of the 2024 Men's T20 World Cup and 2025 ICC Champions Trophy.",
+    "source": "wikipedia",
+    "confidence": 0.7,
+    "usage_count": 2,
+    "learned_at": 1766642329.1569679
+  },
+  "albert einstein": {
+    "content": "Albert Einstein was a German-born theoretical physicist best known for developing the theory of relativity. Einstein also made important contributions to quantum theory. His mass\u2013energy equivalence formula E = mc2, which arises from special relativity, has been called \"the world's most famous equation\". He received the 1921 Nobel Prize in Physics for \"his services to theoretical physics, and especially for his discovery of the law of the photoelectric effect\".",
+    "source": "wikipedia",
+    "confidence": 0.7,
+    "usage_count": 2,
+    "learned_at": 1766642346.907683
+  },
+  "cristiano ronaldo": {
+    "content": "Cristiano Ronaldo dos Santos Aveiro is a Portuguese professional footballer who plays as a forward for, and captains, both Saudi Pro League club Al-Nassr and the Portugal national team. Nicknamed CR7, he is widely regarded as one of the greatest players in history, and has won numerous individual accolades throughout his career, including five Ballon d'Ors, a record three UEFA Men's Player of the Year Awards, four European Golden Shoes, and was named five times the world's best player by FIFA. He has won 34 trophies in his career, including five UEFA Champions Leagues and the UEFA European Championship. He holds the records for most goals (140) and assists (42) in the Champions League, goals (14) and assists (8) in the European Championship, and most international appearances (226) and international goals (143). He is the only player to have scored 100 goals with four different clubs. He has made over 1,300 professional career appearances, the most by an outfield player, and has scored over 950 official senior career goals for club and country, making him the top goalscorer of all time.",
+    "source": "wikipedia",
+    "confidence": 0.7,
+    "usage_count": 2,
+    "learned_at": 1766642373.3051145
+  },
+  "pron": {
+    "content": "Pron may refer to:",
+    "source": "wikipedia",
+    "confidence": 0.7,
+    "usage_count": 2,
+    "learned_at": 1766642440.0897567
+  },
+  "porn": {
+    "content": "Pornography is sexually suggestive material, such as a picture, video, text, or audio, intended for sexual arousal. Made for consumption by adults, pornographic depictions have evolved from cave paintings, some forty millennia ago, to modern-day virtual reality presentations. A general distinction of adults-only sexual content is made, classifying it as pornography or erotica.",
+    "source": "wikipedia",
+    "confidence": 0.7,
+    "usage_count": 2,
+    "learned_at": 1766642447.4432986
+  },
+  "virat kohli": {
+    "content": "Virat Kohli is an Indian international cricketer and the former all-format captain of the Indian national cricket team. He is a right-handed batter and occasional right-arm medium pace bowler. Considered one of the greatest all-format batsmen in the history of cricket, he has been nicknamed the King, the Chase Master, and the Run Machine for his skills, records and ability to lead his team to victory. Kohli has the most centuries in ODIs and the second-most centuries in international cricket with 84 tons across all formats. He is also the leading run-scorer in the Indian Premier League. Kohli is the most successful Test captain of India with most wins and 3 consecutive Test mace retainments. He is the only batter to earn 900+ rating points across all 3 formats.",
+    "source": "wikipedia",
+    "confidence": 0.7,
+    "usage_count": 2,
+    "learned_at": 1766642854.0235593
+  },
+  "president of pakistan": {
+    "content": "The President of Pakistan is the head of state of the Islamic Republic of Pakistan. The president is the nominal head of the executive and the federal parliament, the first citizen of the country, and the supreme commander of the Pakistan Armed Forces. Serving as the ceremonial head of the federation, the president is bound to act on advice of the prime minister and the federal cabinet. Asif Ali Zardari is the 14th and current president, having assumed the presidency on 10 March 2024.",
+    "source": "wikipedia",
+    "confidence": 0.7,
+    "usage_count": 2,
+    "learned_at": 1766643474.6113303
+  },
+  "l": {
+    "content": "L, or l, is the twelfth letter of the Latin alphabet, used in the modern English alphabet, the alphabets of other western European languages and others worldwide. Its name in English is el, plural els.",
+    "source": "wikipedia",
+    "confidence": 0.7,
+    "usage_count": 2,
+    "learned_at": 1766643492.0542116
+  },
+  "president of sri lanka": {
+    "content": "The president of Sri Lanka is the head of state and head of government of the Democratic Socialist Republic of Sri Lanka. The president is the chief executive of the union government and the commander-in-chief of the Sri Lanka Armed Forces. The powers, functions and duties of prior presidential offices, in addition to their relation with the Prime minister and Government of Sri Lanka, have over time differed with the various constitutional documents since the creation of the office. The president appoints the Prime Minister of Sri Lanka who can command the confidence of the Parliament of Sri Lanka.",
+    "source": "wikipedia",
+    "confidence": 0.7,
+    "usage_count": 2,
+    "learned_at": 1766643561.5118315
   }
 }

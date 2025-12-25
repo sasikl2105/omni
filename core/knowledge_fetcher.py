@@ -1,28 +1,41 @@
+# core/knowledge_fetcher.py
+# Central knowledge fetcher for OMNI (FIXED FOR TERMUX)
+
+from core.knowledge_memory import recall_fact, remember_fact
+from core.dictionary_fetcher import lookup_word
 import requests
 
-WIKI_API = "https://en.wikipedia.org/api/rest_v1/page/summary/{}"
 
 HEADERS = {
-    "User-Agent": "JarvisAI/1.0 (learning-bot; contact: local)"
+    "User-Agent": "OMNI-AI/1.0 (https://example.com)"
 }
 
+
 def fetch_knowledge(topic: str) -> str | None:
+    topic = topic.lower().strip()
+
+    # 1️⃣ Memory first
+    stored = recall_fact(topic)
+    if stored and stored.get("content"):
+        return stored["content"]
+
+    # 2️⃣ Wikipedia (PRIMARY)
     try:
-        topic = topic.strip().replace(" ", "_")
-        url = WIKI_API.format(topic)
+        url = f"https://en.wikipedia.org/api/rest_v1/page/summary/{topic.replace(' ', '_')}"
+        r = requests.get(url, headers=HEADERS, timeout=5)
 
-        r = requests.get(url, headers=HEADERS, timeout=8)
-        if r.status_code != 200:
-            return None
-
-        data = r.json()
-
-        extract = data.get("extract")
-        if not extract:
-            return None
-
-        # Keep first paragraph only
-        return extract.split("\n")[0]
-
+        if r.status_code == 200:
+            data = r.json()
+            if "extract" in data and data["extract"]:
+                remember_fact(topic, data["extract"], source="wikipedia")
+                return data["extract"]
     except Exception:
-        return None
+        pass
+
+    # 3️⃣ Dictionary (LAST RESORT)
+    meaning = lookup_word(topic)
+    if meaning:
+        remember_fact(topic, meaning, source="dictionary")
+        return meaning
+
+    return None

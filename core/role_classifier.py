@@ -1,10 +1,10 @@
-import re
+# core/role_classifier.py
+# Strict role classification for OMNI (with grammar normalization)
 
 ROLE_KEYWORDS = [
-    "chief minister",
-    "prime minister",
     "president",
-    "governor",
+    "prime minister",
+    "chief minister",
     "education minister",
     "health minister",
     "finance minister",
@@ -12,34 +12,29 @@ ROLE_KEYWORDS = [
     "minister"
 ]
 
-DEPARTMENT_MAP = {
-    "education": "Minister for School Education",
-    "health": "Minister for Health",
-    "finance": "Minister of Finance",
-    "home": "Minister of Home Affairs"
-}
-
 def is_role_question(text: str) -> bool:
     text = text.lower()
-    return "minister" in text or any(k in text for k in ROLE_KEYWORDS)
+    return text.startswith("who is") and any(k in text for k in ROLE_KEYWORDS)
 
-def extract_role(text: str) -> str:
+
+def extract_role(text: str) -> str | None:
+    """
+    Normalize role questions:
+    - who is president of india
+    - who is india president
+    """
+
     text = text.lower().replace("who is", "").strip()
 
-    # ---- Chief Minister ----
-    if "chief minister" in text:
-        place = text.replace("chief minister", "").strip()
-        return f"Chief Minister of {place.title()}"
+    # Case 1: correct form
+    if " of " in text:
+        return text
 
-    # ---- Department Ministers ----
-    for dept, title in DEPARTMENT_MAP.items():
-        if dept in text and "minister" in text:
-            place = text.replace(dept, "").replace("minister", "").strip()
-            return f"{title} of {place.title()}"
+    # Case 2: reversed form → "america president"
+    parts = text.split()
+    if len(parts) >= 2 and parts[-1] in ROLE_KEYWORDS:
+        country = " ".join(parts[:-1])
+        role = parts[-1]
+        return f"{role} of {country}"
 
-    # ---- Generic Minister ----
-    if "minister" in text:
-        place = text.replace("minister", "").strip()
-        return f"Minister of {place.title()}"
-
-    return text.title()
+    return None

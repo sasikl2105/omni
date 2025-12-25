@@ -40,3 +40,10 @@ def set_name(name: str):
 def get_name():
     mem = _load()
     return mem.get("user", {}).get("name")
+
+# ===============================
+# USER PREFERENCES (SAFE DEFAULT)
+# ===============================
+
+def get_pref(key, default=None):
+    return default

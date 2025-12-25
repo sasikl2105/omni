@@ -22,26 +22,20 @@ def _save(data):
 # =========================
 
 def get_title(title: str):
-    """
-    Returns learned title mapping if exists
-    """
     data = _load()
     return data.get(title.lower())
 
-def remember_title(title: str, person: str, confidence: float = 0.6):
-    """
-    Store a learned title with confidence score
-    """
+def remember_title(title: str, person: str, confidence=0.5):
     data = _load()
 
     title = title.lower()
     person = person.lower()
 
     if title in data:
-        # increase confidence slowly
         data[title]["confidence"] = min(
             1.0, data[title]["confidence"] + 0.1
         )
+        data[title]["person"] = person
     else:
         data[title] = {
             "person": person,
